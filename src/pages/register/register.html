@@ -1,0 +1,55 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Registrar</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form>
+    <ion-list>
+
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="usuario.nombre_completo" placeholder="Nombre Completo" name="nombre_completo"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="usuario.email" placeholder="Correo Electronico" name="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="password" [(ngModel)]="usuario.password" placeholder="Contraseña" name="password"></ion-input>
+      </ion-item>
+
+      <ion-list radio-group> <!--[(ngModel)]="tipo_usuario">-->
+        <ion-item>
+          <ion-label>Trabajador</ion-label>
+          <ion-radio value="trabajador"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Usuario</ion-label>
+          <ion-radio value="usuario"></ion-radio>
+        </ion-item>
+      </ion-list>
+
+      <ion-item>
+        <ion-label>Categorias</ion-label>
+        <ion-select multiple = "true"> <!-- [(ngModel)]="toppings" multiple="true">-->
+          <ion-option>Bacon</ion-option>
+          <ion-option>Black Olives</ion-option>
+          <ion-option>Extra Cheese</ion-option>
+          <ion-option>Mushrooms</ion-option>
+          <ion-option>Pepperoni</ion-option>
+          <ion-option>Sausage</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <button ion-button outline (click)="registrar()" block>Registrar</button>
+      </ion-item>
+
+    </ion-list>
+  </form>
+</ion-content>
