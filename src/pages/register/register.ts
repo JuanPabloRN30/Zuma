@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { User } from '../../models/user'
+import { Vendedor } from '../../models/user'
+import { Cliente } from '../../models/user'
 
 @IonicPage()
 @Component({
@@ -11,6 +13,8 @@ import { User } from '../../models/user'
 export class RegisterPage {
 
   usuario: User;
+  tipo: string;
+  intereses: string[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     if(this.navParams.get('usuario'))
@@ -34,6 +38,22 @@ export class RegisterPage {
     console.log(this.usuario.nombre_completo);
     console.log(this.usuario.email);
     console.log(this.usuario.password);
+    console.log(this.tipo);
+    if( this.tipo == "vendedor" )
+    {
+
+    }
+    else
+    {
+
+    }
+    if( this.intereses )
+    {
+      for( let interes of this.intereses )
+      {
+        console.log( interes );
+      }
+    }
   }
 
 }

@@ -16,17 +16,18 @@
       </ion-item>
 
       <ion-item>
-        <ion-input type="text" [(ngModel)]="usuario.email" placeholder="Correo Electronico" name="email"></ion-input>
+        <ion-input type="email" [(ngModel)]="usuario.email" placeholder="Correo Electronico" name="email"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-input type="password" [(ngModel)]="usuario.password" placeholder="Contraseña" name="password"></ion-input>
       </ion-item>
 
-      <ion-list radio-group> <!--[(ngModel)]="tipo_usuario">-->
+      <ion-list radio-group [(ngModel)]="tipo" name="tipo">
+        <ion-list-header>Tipo de Usuario</ion-list-header>
         <ion-item>
           <ion-label>Trabajador</ion-label>
-          <ion-radio value="trabajador"></ion-radio>
+          <ion-radio value="vendedor" checked></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>Usuario</ion-label>
@@ -36,13 +37,13 @@
 
       <ion-item>
         <ion-label>Categorias</ion-label>
-        <ion-select multiple = "true"> <!-- [(ngModel)]="toppings" multiple="true">-->
-          <ion-option>Bacon</ion-option>
-          <ion-option>Black Olives</ion-option>
-          <ion-option>Extra Cheese</ion-option>
-          <ion-option>Mushrooms</ion-option>
-          <ion-option>Pepperoni</ion-option>
-          <ion-option>Sausage</ion-option>
+        <ion-select multiple = "true" [(ngModel)]="intereses" name="intereses" > <!-- [(ngModel)]="toppings" multiple="true">-->
+          <ion-option value="a" >Bacon</ion-option>
+          <ion-option value="b">Black Olives</ion-option>
+          <ion-option value="c">Extra Cheese</ion-option>
+          <ion-option value="d">Mushrooms</ion-option>
+          <ion-option value="e">Pepperoni</ion-option>
+          <ion-option value="f">Sausage</ion-option>
         </ion-select>
       </ion-item>
 
