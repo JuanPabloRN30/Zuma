@@ -14,7 +14,16 @@ export class RegisterPage {
 
   usuario: User;
   tipo: string;
-  intereses: string[];
+  intereses_h: string[];
+  intereses_a: string[];
+  intereses_b: string[];
+
+  areas_interes: any ={
+    'Hogar': [ 'Electricidad','Plomeria','Cerrajeria' ],
+    'Alimentacion': [ 'Comida Rapida','Postres','Comida Tipica','Reposteria','Panaderia' ],
+    'Belleza': [ 'Maquillaje','Manicure','Pedicure','Tintes','Corte','Depilacion','Masajes' ],
+  };
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     if(this.navParams.get('usuario'))
@@ -47,9 +56,23 @@ export class RegisterPage {
     {
 
     }
-    if( this.intereses )
+    if( this.intereses_h )
     {
-      for( let interes of this.intereses )
+      for( let interes of this.intereses_h )
+      {
+        console.log( interes );
+      }
+    }
+    if( this.intereses_a )
+    {
+      for( let interes of this.intereses_a )
+      {
+        console.log( interes );
+      }
+    }
+    if( this.intereses_b )
+    {
+      for( let interes of this.intereses_b )
       {
         console.log( interes );
       }

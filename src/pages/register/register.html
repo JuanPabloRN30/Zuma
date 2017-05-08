@@ -10,24 +10,26 @@
 <ion-content padding>
   <form>
     <ion-list>
+      <ion-list>
+        <ion-list-header>Información</ion-list-header>
+        <ion-item>
+          <ion-input type="text" [(ngModel)]="usuario.nombre_completo" placeholder="Nombre Completo" name="nombre_completo"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-input type="text" [(ngModel)]="usuario.nombre_completo" placeholder="Nombre Completo" name="nombre_completo"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-input type="email" [(ngModel)]="usuario.email" placeholder="Correo Electronico" name="email"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-input type="email" [(ngModel)]="usuario.email" placeholder="Correo Electronico" name="email"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input type="password" [(ngModel)]="usuario.password" placeholder="Contraseña" name="password"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-input type="password" [(ngModel)]="usuario.password" placeholder="Contraseña" name="password"></ion-input>
+        </ion-item>
+      </ion-list>
 
       <ion-list radio-group [(ngModel)]="tipo" name="tipo">
         <ion-list-header>Tipo de Usuario</ion-list-header>
         <ion-item>
           <ion-label>Trabajador</ion-label>
-          <ion-radio value="vendedor" checked></ion-radio>
+          <ion-radio value="vendedor"></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>Usuario</ion-label>
@@ -35,22 +37,32 @@
         </ion-item>
       </ion-list>
 
-      <ion-item>
-        <ion-label>Categorias</ion-label>
-        <ion-select multiple = "true" [(ngModel)]="intereses" name="intereses" > <!-- [(ngModel)]="toppings" multiple="true">-->
-          <ion-option value="a" >Bacon</ion-option>
-          <ion-option value="b">Black Olives</ion-option>
-          <ion-option value="c">Extra Cheese</ion-option>
-          <ion-option value="d">Mushrooms</ion-option>
-          <ion-option value="e">Pepperoni</ion-option>
-          <ion-option value="f">Sausage</ion-option>
-        </ion-select>
-      </ion-item>
+      <ion-list>
+        <ion-list-header>Intereses</ion-list-header>
+        <ion-item>
+          <ion-label>Hogar</ion-label>
+          <ion-select multiple = "true" [(ngModel)]="intereses_h" name="intereses_h" > <!-- [(ngModel)]="toppings" multiple="true">-->
+            <ion-option *ngFor="let x of areas_interes['Hogar']" value="{{x}}" >{{x}}</ion-option>
+          </ion-select>
+        </ion-item>
 
+        <ion-item>
+          <ion-label>Alimentacion</ion-label>
+          <ion-select multiple = "true" [(ngModel)]="intereses_a" name="intereses_a" >
+            <ion-option *ngFor="let x of areas_interes['Alimentacion']" value="{{x}}" >{{x}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Belleza</ion-label>
+          <ion-select multiple = "true" [(ngModel)]="intereses_b" name="intereses_b" >
+            <ion-option *ngFor="let x of areas_interes['Belleza']" value="{{x}}" >{{x}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
       <ion-item>
         <button ion-button outline (click)="registrar()" block>Registrar</button>
       </ion-item>
-
-    </ion-list>
+      </ion-list>
   </form>
 </ion-content>

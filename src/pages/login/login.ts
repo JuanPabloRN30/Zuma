@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import {HomePage} from '../home/home';
 import {RegisterPage} from '../register/register';
+import {TrabajadorPage} from '../trabajador/trabajador';
 
 @IonicPage()
 @Component({
@@ -24,7 +25,7 @@ export class LoginPage {
   iniciarSesion(){
     console.log('El usuario es: ' + this.username);
     console.log('El password es: ' + this.password);
-    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.setRoot(TrabajadorPage);
   }
 
   registrar(){

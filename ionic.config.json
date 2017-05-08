@@ -2,5 +2,11 @@
   "name": "Renacimiento",
   "app_id": "188d4cce",
   "v2": true,
-  "typescript": true
+  "typescript": true,
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://192.168.0.8:8000"
+    }
+  ]
 }
