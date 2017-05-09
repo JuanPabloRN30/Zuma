@@ -2,15 +2,17 @@ import { TipoPublicacion } from './tipo-publicacion'
 
 export class User
 {
-  nombre_completo: string;
-  email: string;
+  username: string;
   password: string;
+  email: string;
+  first_name: string;
   intereses: TipoPublicacion[];
 
   constructor(data: any) {
-    this.nombre_completo = data.nombre_completo;
-    this.email = data.email;
+    this.username = data.username;
     this.password = data.password;
+    this.email = data.email;
+    this.first_name = data.first_name;
     if( data.intereses )
     {
       for( let interes of data.intereses )
@@ -22,30 +24,55 @@ export class User
 
   export(): any {
     var obj: any = {};
-    obj.nombre_completo = this.nombre_completo
-    obj.email = this.email
-    obj.password = this.password
+    obj.username = this.username;
+    obj.password = this.password;
+    obj.email = this.email;
+    obj.first_name = this.first_name;
     return obj
-  }
-}
-
-export class Vendedor extends User
-{
-  factura: string;
-  estado: string;
-  cedula: string;
-  state: boolean;
-
-  constructor( data: any ){
-    super( data );
-    this.factura = data.factura;
-    this.estado = data.estado;
-    this.cedula = data.cedula;
-    this.state = false;
   }
 }
 
 export class Cliente extends User
 {
 
+  constructor( data: any ){
+    super( data );
+  }
+  
+  export(): any {
+        var obj = super.export();
+        return obj
+  }
+}
+
+export class Trabajador extends User
+{
+  photo: string;
+  factura: string;
+  cedula: string;
+  valoracion: number;
+  cantidad_votos: number;
+  estado: boolean;
+
+
+  constructor(data: any) {
+    super( data );
+    this.photo = data.photo;
+    this.factura = data.factura;
+    this.cedula = data.cedula;
+    this.valoracion = data.valoracion;
+    this.cantidad_votos = data.cantidad_votos;
+    this.estado = data.estado;
+  }
+
+  export(): any {
+        var obj = super.export();
+        obj.photo = this.photo;
+        obj.factura = this.factura;
+        obj.cedula = this.cedula;
+        obj.valoracion = this.valoracion;
+        obj.cantidad_votos = this.cantidad_votos;
+        obj.estado = this.estado;
+        return obj
+  }
 }

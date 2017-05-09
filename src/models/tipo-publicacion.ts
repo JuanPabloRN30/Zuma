@@ -1,14 +1,14 @@
-export class TipoPublicacion
+import {Categoria} from './categoria'
+
+export class Interes
 {
   id: number;
   nombre: string;
-  descripcion: string;
-  icono: string;
+  categoria: Categoria;
 
   constructor(data: any) {
     this.id = data.id;
     this.nombre = data.nombre;
-    this.descripcion = data.descripcion;
-    this.icono = data.icono;
+    this.categoria = data.categoria;
   }
 }

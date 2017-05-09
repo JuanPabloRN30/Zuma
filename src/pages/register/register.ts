@@ -1,9 +1,17 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';
+import { NavController, Events, NavParams } from 'ionic-angular'
+import { AlertController, ModalController } from 'ionic-angular'
 
-import { User } from '../../models/user'
-import { Vendedor } from '../../models/user'
+import { Trabajador } from '../../models/user'
 import { Cliente } from '../../models/user'
+import { User } from '../../models/user'
+
+import {TrabajadorPage} from '../trabajador/trabajador'
+import {ClientePage} from '../cliente/cliente'
+
+import { UserDataService } from '../../providers/user-data-service'
+import { AuthService } from '../../providers/auth-service';
 
 @IonicPage()
 @Component({
@@ -12,7 +20,10 @@ import { Cliente } from '../../models/user'
 })
 export class RegisterPage {
 
+  trabajador: Trabajador;
+  cliente: Cliente;
   usuario: User;
+
   tipo: string;
   intereses_h: string[];
   intereses_a: string[];
@@ -25,58 +36,136 @@ export class RegisterPage {
   };
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    if(this.navParams.get('usuario'))
-    {
-      this.usuario = this.navParams.get('usuario');
-      console.log('recibi algo');
-    }
-    else
-    {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private userService: UserDataService,
+              public alertCtrl: AlertController,
+              private modalCtrl: ModalController,
+              private authService: AuthService,
+              public events: Events,
+              public userDataService: UserDataService) {
       this.usuario = new User({});
-      console.log('no recibi nada');
-    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Register');
   }
 
-  registrar(){
-    console.log('Los datos son: ');
-    console.log(this.usuario.nombre_completo);
-    console.log(this.usuario.email);
-    console.log(this.usuario.password);
-    console.log(this.tipo);
-    if( this.tipo == "vendedor" )
+  registrar() {
+    this.usuario.username = this.usuario.email;
+    if( this.tipo == "trabajador" )
     {
-
+      this.trabajador = new Trabajador(this.usuario);
+      console.log("Entre a trabajador")
+      this.registrarTrabajador( );
+    }
+    else if( this.tipo == "cliente" )
+    {
+      console.log("Entre a cliente")
+      this.cliente = new Cliente( this.usuario );
+      this.registrarCliente( );
     }
     else
     {
+      var alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'No selecciono ningún tipo de usuario',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
 
-    }
-    if( this.intereses_h )
-    {
-      for( let interes of this.intereses_h )
-      {
-        console.log( interes );
-      }
-    }
-    if( this.intereses_a )
-    {
-      for( let interes of this.intereses_a )
-      {
-        console.log( interes );
-      }
-    }
-    if( this.intereses_b )
-    {
-      for( let interes of this.intereses_b )
-      {
-        console.log( interes );
-      }
-    }
   }
+
+  registrarTrabajador( )
+  {
+    this.userService.saveTrabajador(this.trabajador).subscribe(
+      trabajador => {
+        this.getAuthenticatedTrabajador()
+      },
+      (error: Response) => {
+        console.log(error);
+        var msg = 'No se pudo crear el usuario'
+        if(error.status == 500){
+          msg = "El correo seleccionado ya está en uso";
+        } else if (error.status == 400) {
+          let errObj = error.json();
+          if (errObj['email']) {
+            msg = errObj['email'];
+          } else if (errObj['username']) {
+            msg = errObj['username'];
+          }  else {
+            msg = "Error por favor intenta más tarde";
+          }
+        }
+
+        var alert = this.alertCtrl.create({
+          title: 'Error',
+          subTitle: msg,
+          buttons: ['OK']
+        });
+        alert.present();
+      })
+  }
+
+  registrarCliente( )
+  {
+    this.userService.saveCliente(this.cliente).subscribe(
+      cliente => {
+        this.getAuthenticatedCliente()
+      },
+      (error: Response) => {
+        console.log(error);
+        var msg = 'No se pudo crear el usuario'
+        if(error.status == 500){
+          msg = "El correo seleccionado ya está en uso";
+        } else if (error.status == 400) {
+          let errObj = error.json();
+          if (errObj['email']) {
+            msg = errObj['email'];
+          } else if (errObj['username']) {
+            msg = errObj['username'];
+          }  else {
+            msg = "Error por favor intenta más tarde";
+          }
+        }
+
+        var alert = this.alertCtrl.create({
+          title: 'Error',
+          subTitle: msg,
+          buttons: ['OK']
+        });
+        alert.present();
+      })
+  }
+
+  getAuthenticatedTrabajador() {
+		this.authService.getAuthTrabajador().subscribe(
+			trabajador => {
+				this.events.publish('trabajador:logged', trabajador);
+				this.userDataService.setTrabajador(trabajador);
+				console.log(trabajador);
+				this.navCtrl.setRoot(TrabajadorPage);
+			},
+			error => {
+
+			}
+		);
+	}
+
+  getAuthenticatedCliente() {
+		this.authService.getAuthCliente().subscribe(
+			cliente => {
+				this.events.publish('cliente:logged', cliente);
+				this.userDataService.setCliente(cliente);
+				console.log(cliente);
+				this.navCtrl.setRoot(ClientePage);
+			},
+			error => {
+
+			}
+		);
+	}
+
 
 }

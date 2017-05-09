@@ -1,5 +1,5 @@
 import { TipoPublicacion } from './tipo-publicacion';
-import { Vendedor } from './user';
+import { User } from './user';
 
 export class Publicacion
 {
@@ -11,7 +11,7 @@ export class Publicacion
   //comentarios
   descripcion: string;
   precio: number;
-  creador: Vendedor;
+  creador: User;
   estado: boolean;
   foto: string;
 

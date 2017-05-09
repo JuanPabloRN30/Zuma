@@ -16,7 +16,6 @@ export class HomePage {
   constructor(public navCtrl: NavController,
               public authService: AuthService
              ) {
-
   }
 
   ionViewDidLoad(){

@@ -13,7 +13,7 @@
       <ion-list>
         <ion-list-header>Información</ion-list-header>
         <ion-item>
-          <ion-input type="text" [(ngModel)]="usuario.nombre_completo" placeholder="Nombre Completo" name="nombre_completo"></ion-input>
+          <ion-input type="text" [(ngModel)]="usuario.first_name" placeholder="Nombre Completo" name="first_name"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -29,11 +29,11 @@
         <ion-list-header>Tipo de Usuario</ion-list-header>
         <ion-item>
           <ion-label>Trabajador</ion-label>
-          <ion-radio value="vendedor"></ion-radio>
+          <ion-radio value="trabajador"></ion-radio>
         </ion-item>
         <ion-item>
-          <ion-label>Usuario</ion-label>
-          <ion-radio value="usuario"></ion-radio>
+          <ion-label>Cliente</ion-label>
+          <ion-radio value="cliente"></ion-radio>
         </ion-item>
       </ion-list>
 

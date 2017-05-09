@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, Events, LoadingController, Loading } from 'ionic-angular';
 
-import {HomePage} from '../home/home';
+import { AuthService } from '../../providers/auth-service';
 import {RegisterPage} from '../register/register';
 import {TrabajadorPage} from '../trabajador/trabajador';
+
+import { SERVER_URL } from '../../providers/services-util';
+import { UserDataService } from '../../providers/user-data-service';
 
 @IonicPage()
 @Component({
@@ -13,19 +16,83 @@ import {TrabajadorPage} from '../trabajador/trabajador';
 export class LoginPage {
 
   username: string;
-  password: string;
+	password: string;
+	authenticatingUser: boolean;
+  loader: Loading;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              private authService: AuthService,
+              public alertCtrl: AlertController,
+              public events: Events,
+              public userDataService: UserDataService,
+              public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Login');
+		if(localStorage.getItem('token')) {
+      console.log('Entre aca');
+      console.log(localStorage.getItem('token'));
+			this.authenticatingUser = true;
+			this.getAuthenticatedCustomer();
+		} else {
+			this.authenticatingUser = false;
+		}
   }
 
-  iniciarSesion(){
-    console.log('El usuario es: ' + this.username);
-    console.log('El password es: ' + this.password);
-    this.navCtrl.setRoot(TrabajadorPage);
+  iniciarSesion() {
+		this.presentLoader();
+		this.authService.login(this.username, this.password).subscribe(
+			token => {
+				console.log(token.token);
+				localStorage.setItem('token', token.token);
+				this.authService.reloadToken();
+				this.getAuthenticatedCustomer();
+			},
+			err => {
+				this.authenticatingUser = false;
+				let msg = "error " + SERVER_URL;
+				if (err.status == 500) {
+						msg = "error de conexión, porfavor intenta mas tarde";
+				} else if (err.status == 400) {
+						msg = "Las credenciales ingresadas no son correctas!";
+				}
+				var alert = this.alertCtrl.create({
+						title: 'Error al iniciar sesión',
+						subTitle: msg,
+						buttons: ['OK']
+				});
+				this.dismissLoader();
+				alert.present();
+			})
+  }
+
+  getAuthenticatedCustomer() {
+    this.authService.getAuthTrabajador().subscribe(
+      trabajador => {
+        this.events.publish('trabajador:logged', trabajador);
+        console.log(trabajador);
+        this.userDataService.setTrabajador(trabajador);
+        console.log(trabajador);
+        this.navCtrl.setRoot(TrabajadorPage);
+        this.dismissLoader();
+    },
+    error => {
+        this.authenticatingUser = false;
+        this.dismissLoader();
+    }
+    );
+
+  }
+
+  presentLoader() {
+		this.loader = this.loadingCtrl.create({spinner: 'crescent'});
+    this.loader.present();
+  }
+
+  dismissLoader() {
+		if(this.loader) {
+			this.loader.dismiss();
+		}
   }
 
   registrar(){

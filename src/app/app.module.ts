@@ -13,6 +13,7 @@ import { ClientePage } from '../pages/cliente/cliente';
 import { TrabajadorPage } from '../pages/trabajador/trabajador';
 
 import { AuthService } from '../providers/auth-service'
+import { UserDataService } from '../providers/user-data-service'
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AuthService } from '../providers/auth-service'
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthService
+    AuthService,
+    UserDataService
   ]
 })
 export class AppModule {}
