@@ -5,6 +5,7 @@ import { AlertController, ModalController } from 'ionic-angular'
 
 import { Trabajador } from '../../models/user'
 import { Cliente } from '../../models/user'
+import { Interes } from '../../models/interes'
 import { User } from '../../models/user'
 
 import {TrabajadorPage} from '../trabajador/trabajador'
@@ -28,6 +29,7 @@ export class RegisterPage {
   intereses_h: string[];
   intereses_a: string[];
   intereses_b: string[];
+  interes: Interes[] = [];
 
   areas_interes: any ={
     'Hogar': [ 'Electricidad','Plomeria','Cerrajeria' ],
@@ -53,6 +55,7 @@ export class RegisterPage {
 
   registrar() {
     this.usuario.username = this.usuario.email;
+    this.crearIntereses();
     if( this.tipo == "trabajador" )
     {
       this.trabajador = new Trabajador(this.usuario);
@@ -77,11 +80,61 @@ export class RegisterPage {
 
   }
 
+  crearIntereses()
+  {
+
+    if( this.intereses_h )
+    {
+        for( let current of this.intereses_h )
+        {
+          var aux = new Interes({});
+          aux.nombre = current;
+          this.interes.push( aux );
+        }
+    }
+    if( this.intereses_a )
+    {
+        for( let current of this.intereses_a )
+        {
+          var aux = new Interes({});
+          aux.nombre = current;
+          this.interes.push( aux );
+        }
+    }
+    if( this.intereses_b )
+    {
+        for( let current of this.intereses_b )
+        {
+          var aux = new Interes({});
+          aux.nombre = current;
+          this.interes.push( aux );
+        }
+    }
+    for( let current of this.interes )
+    {
+      console.log("ENtre aca");
+      console.log( current )
+    }
+    this.usuario.intereses = this.interes;
+  }
+
   registrarTrabajador( )
   {
+    console.log( this.trabajador.export() )
     this.userService.saveTrabajador(this.trabajador).subscribe(
       trabajador => {
-        this.getAuthenticatedTrabajador()
+        this.authService.login(this.trabajador.username, this.trabajador.password).subscribe(
+          token => {
+            console.log('Entre al token')
+            console.log(token);
+            localStorage.setItem('token', token.token);
+            this.authService.reloadToken();
+            this.getAuthenticatedTrabajador();
+          },
+          error => {
+            console.log(error);
+          });
+        //this.getAuthenticatedTrabajador()
       },
       (error: Response) => {
         console.log(error);
@@ -112,7 +165,7 @@ export class RegisterPage {
   {
     this.userService.saveCliente(this.cliente).subscribe(
       cliente => {
-        this.getAuthenticatedCliente()
+        //this.getAuthenticatedCliente()
       },
       (error: Response) => {
         console.log(error);

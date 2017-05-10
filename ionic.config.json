@@ -6,7 +6,7 @@
   "proxies": [
     {
       "path": "/api",
-      "proxyUrl": "http://10.152.21.65:8000"
+      "proxyUrl": "https://zuma-server-juanpablorn30.c9users.io/api"
     }
   ]
 }

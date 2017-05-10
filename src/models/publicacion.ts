@@ -1,31 +1,27 @@
-import { TipoPublicacion } from './tipo-publicacion';
-import { User } from './user';
+import { Interes } from './interes';
+import { Cliente, Trabajador } from './user';
 
-export class Publicacion
+export class Solicitud
 {
   id: number;
-  titulo: string;
-  tipo_publicacion: TipoPublicacion;
-  valoracion: number;
-  total_valoracion: number;
-  //comentarios
-  descripcion: string;
-  precio: number;
-  creador: User;
-  estado: boolean;
-  foto: string;
+  fecha: string;
+  direccion: string;
+  estado: string;
+  cliente: Cliente;
+  trabajador: Trabajador;
+  interes: Interes;
 
   constructor( data: any )
   {
     this.id = data.id;
-    this.titulo = data.titulo;
-    if( data.tipo_publicacion )
-      this.tipo_publicacion = new TipoPublicacion( data.tipo_publicacion );
-    this.valoracion = 0;
-    this.total_valoracion = 0;
-    this.descripcion = data.descripcion;
-    this.precio = data.precio;
-    this.estado = true;
-    this.foto = data.foto;
+    this.fecha = data.fecha;
+    this.direccion = data.direccion;
+    this.estado = data.estado;
+    if( data.cliente )
+      this.cliente = new Cliente(data.cliente);
+    if( data.trabajador )
+      this.trabajador = new Trabajador( data.trabajador );
+    if( data.interes )
+      this.interes = new Interes( data.interes );
   }
 }

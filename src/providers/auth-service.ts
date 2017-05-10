@@ -15,11 +15,11 @@ export class AuthService {
 
   constructor(public http: Http) {
     console.log('Hello AuthService Provider');
-    //this.token = localStorage.getItem('token');
+    this.token = localStorage.getItem('token');
   }
 
   login(username: string, password: string): Observable<any>{
-    let loginUrl: string = SERVER_URL + "/api/api/token-auth/";
+    let loginUrl: string = `${SERVER_URL}/api/token-auth/`;
     var headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' })
     var options = new RequestOptions({ headers: headers });
     return this.http.post(loginUrl,{
@@ -32,7 +32,8 @@ export class AuthService {
   }
 
   getAuthTrabajador(): Observable<Trabajador> {
-    let authTrabajadorUrl: string = `${SERVER_URL}/api/api/trabajador/authenticated/`;
+    let authTrabajadorUrl: string = `${SERVER_URL}/api/trabajador/authenticated/`;
+    console.log( 'Este token: ' + this.token )
     var headers = new Headers({ 'Content-Type': 'application/json',
                              'Accept': 'application/json',
                              'Authorization': `Token ${this.token}`
@@ -44,7 +45,7 @@ export class AuthService {
    }
 
    getAuthCliente(): Observable<Cliente> {
-     let authClienteUrl: string = `${SERVER_URL}/api/api/cliente/authenticated/`;
+     let authClienteUrl: string = `${SERVER_URL}/api/cliente/authenticated/`;
      var headers = new Headers({ 'Content-Type': 'application/json',
                               'Accept': 'application/json',
                               'Authorization': `Token ${this.token}`

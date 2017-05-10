@@ -36,7 +36,7 @@ export class UserDataService {
   }
 
   saveTrabajador(trabajador: Trabajador): Observable<Trabajador> {
-   let createTrabajadorURI: string = `${SERVER_URL}/api/api/trabajador/`
+   let createTrabajadorURI: string = `${SERVER_URL}/api/trabajador/`
    var headers = new Headers({ 'Content-Type': 'application/json',
                                 'Accept': 'application/json',
    })
@@ -47,7 +47,7 @@ export class UserDataService {
   }
 
   saveCliente(cliente: Cliente): Observable<Cliente> {
-   let createClienteURI: string = `${SERVER_URL}/api/api/cliente/`
+   let createClienteURI: string = `${SERVER_URL}/api/cliente/`
    var headers = new Headers({ 'Content-Type': 'application/json',
                                 'Accept': 'application/json',
    })

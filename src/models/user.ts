@@ -1,4 +1,4 @@
-import { TipoPublicacion } from './tipo-publicacion'
+import { Interes } from './interes'
 
 export class User
 {
@@ -6,7 +6,7 @@ export class User
   password: string;
   email: string;
   first_name: string;
-  intereses: TipoPublicacion[];
+  intereses: Interes[] = [];
 
   constructor(data: any) {
     this.username = data.username;
@@ -17,7 +17,7 @@ export class User
     {
       for( let interes of data.intereses )
       {
-        this.intereses.push( new TipoPublicacion( interes ) );
+        this.intereses.push( new Interes( interes ) );
       }
     }
   }
@@ -28,6 +28,7 @@ export class User
     obj.password = this.password;
     obj.email = this.email;
     obj.first_name = this.first_name;
+    obj.intereses = this.intereses;
     return obj
   }
 }
@@ -38,7 +39,7 @@ export class Cliente extends User
   constructor( data: any ){
     super( data );
   }
-  
+
   export(): any {
         var obj = super.export();
         return obj

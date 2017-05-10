@@ -1,18 +1,15 @@
 page-home {
-  #logo{
+
+  img{
     display: block;
-    margin: auto;
-    width: 50%;
-    height: 50%;
-    //padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25%;
+    width: auto;
   }
 
-  #registrar{
-    width: 40%;
-    float: right;
+  ion-row{
+    margin-top: 15%;
   }
-  #ingresar{
-    width: 40%;
-    float: left;
-  }
+
 }

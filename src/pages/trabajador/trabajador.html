@@ -30,33 +30,62 @@
 
 <ion-nav [root]="rootPage" #content></ion-nav>
 
-<ion-content padding>
-  <ion-list>
-    <ion-list-header> Lista de Solicitudes </ion-list-header>
-    <ion-card>
-        <ion-item>
-            <ion-card-header>
-              Nombre del Cliente
-            </ion-card-header>
-            <ion-card-content>
-              <p>Direccion</p>
-              <p>Fecha</p>
-              <p>Tipo de interes</p>
-            </ion-card-content>
-        </ion-item>
+<ion-content>
+  <ion-label text-center> Lista de Solicitudes </ion-label>
+  <ion-card>
+    <img src="assets/img/Hogar.png"/>
+    <ion-item>
+        <ion-card-header>
+          Juan Pablo Rodríguez N.
+        </ion-card-header>
+        <ion-card-content>
+          <p>Av 26 #40-31 Apto 503</p>
+          <p>30 de Junio de 2017</p>
+          <p>Electricidad</p>
+        </ion-card-content>
+    </ion-item>
 
-        <ion-row no-padding>
-          <ion-col col-6>
-            <button ion-button icon-only clear light>
-                <ion-icon name="checkmark"></ion-icon>
-            </button>
-          </ion-col>
-          <ion-col col-6>
-             <button ion-button icon-only color="danger" clear danger>
-                <ion-icon name="close"></ion-icon>
-            </button>
-          </ion-col>
-        </ion-row>
-    </ion-card>
-  </ion-list>
+    <ion-row no-padding>
+      <ion-col>
+        <button ion-button icon-only clear light>
+            <ion-icon name="checkmark"></ion-icon>
+            Aceptar
+        </button>
+      </ion-col>
+      <ion-col text-right>
+         <button ion-button icon-only color="danger" clear danger>
+            <ion-icon name="close"></ion-icon>
+            Rechazar
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-card>
+    <img src="assets/img/Alimentacion.jpg"/>
+    <ion-item>
+        <ion-card-header>
+          Laura Isabel Vargas.
+        </ion-card-header>
+        <ion-card-content>
+          <p>Cll 167a #45-10</p>
+          <p>23 de Agosto de 2017</p>
+          <p>Postres</p>
+        </ion-card-content>
+    </ion-item>
+
+    <ion-row no-padding>
+      <ion-col>
+        <button ion-button icon-only clear light>
+            <ion-icon name="checkmark"></ion-icon>
+            Aceptar
+        </button>
+      </ion-col>
+      <ion-col text-right>
+         <button ion-button icon-only color="danger" clear danger>
+            <ion-icon name="close"></ion-icon>
+            Rechazar
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>
