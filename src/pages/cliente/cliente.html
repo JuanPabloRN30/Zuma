@@ -33,27 +33,22 @@
 <ion-content>
 
   <ion-label text-center> Lista de Solicitudes </ion-label>
-  <ion-card>
-    <img src="assets/img/Hogar.png"/>
+  <ion-card *ngFor="let solicitud of solicitudes">
     <ion-item>
+      <img src="assets/img/Hogar.png"/>
         <ion-card-header>
-          Juan Pablo Rodríguez N.
+          {{ solicitud.trabajador.first_name }}
         </ion-card-header>
         <ion-card-content>
-          <p>Av 26 #40-31 Apto 503</p>
-          <p>30 de Junio de 2017</p>
-          <p>Electricidad</p>
-          <p>Estado: Pendiente </p>
+          <p>{{ solicitud.direccion }}</p>
+          <p>{{ solicitud.fecha | date:'longDate' }}</p>
+          <p>{{ solicitud.interes.nombre }}</p>
+          <p>Estado: {{ solicitud.estado }} </p>
         </ion-card-content>
     </ion-item>
   </ion-card>
 
   <ion-fab bottom right >
-    <button ion-fab><ion-icon name="add" md="md-add"></ion-icon></button>
-    <ion-fab-list side="top">
-      <button ion-fab (click)="buscarHogar()"><ion-icon name="home"></ion-icon></button>
-      <button ion-fab (click)="buscarAlimentacion()"><ion-icon name="restaurant"></ion-icon></button>
-      <button ion-fab (click)="buscarBelleza()"><ion-icon name="body"></ion-icon></button>
-    </ion-fab-list>
+    <button ion-fab (click)=buscar()><ion-icon name="add" md="md-add"></ion-icon></button>
   </ion-fab>
 </ion-content>

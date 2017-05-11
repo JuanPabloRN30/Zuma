@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
 
+import { Solicitud } from '../../models/solicitud'
+import { Trabajador } from '../../models/user'
+
 import {LoginPage} from '../login/login';
 import {HomePage} from '../home/home';
+
+import { SolicitudesService } from '../../providers/solicitudes-service';
+import { UserDataService } from '../../providers/user-data-service';
 
 @IonicPage()
 @Component({
@@ -11,12 +17,16 @@ import {HomePage} from '../home/home';
 })
 export class TrabajadorPage {
 
+  trabajador: Trabajador;
+  solicitudes: Solicitud[];
   pages: Array<{title: string, component: any, icon: string}>;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public menuCtrl: MenuController,
-              public loadingCtrl: LoadingController
+              public loadingCtrl: LoadingController,
+              public solicitudesService: SolicitudesService,
+              public userDataService: UserDataService,
               ) {
 
       this.pages = [
@@ -24,6 +34,20 @@ export class TrabajadorPage {
         { title: 'Configuración', component: LoginPage, icon: 'settings' },
         { title: 'Cerrar Sesión', component: null, icon: 'power' },
       ];
+  }
+
+  ngOnInit()
+  {
+    this.trabajador = this.userDataService.getTrabajador();
+    this.solicitudesService.obtenerSolicitudesTrabajador().subscribe(
+      (solicitudes) => {
+        this.solicitudes = solicitudes;
+        this.solicitudes.reverse();
+      },
+      (error) => {
+
+      }
+    )
   }
 
   ionViewDidLoad() {

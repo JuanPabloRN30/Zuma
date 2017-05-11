@@ -11,6 +11,8 @@ import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { ClientePage } from '../pages/cliente/cliente';
 import { TrabajadorPage } from '../pages/trabajador/trabajador';
+import { BusquedaPage } from '../pages/busqueda/busqueda';
+import { ResultsPage } from '../pages/results/results';
 
 import { AuthService } from '../providers/auth-service'
 import { UserDataService } from '../providers/user-data-service'
@@ -23,7 +25,9 @@ import { SolicitudesService } from '../providers/solicitudes-service'
     LoginPage,
     RegisterPage,
     ClientePage,
-    TrabajadorPage
+    TrabajadorPage,
+    BusquedaPage,
+    ResultsPage
   ],
   imports: [
     BrowserModule,
@@ -37,7 +41,9 @@ import { SolicitudesService } from '../providers/solicitudes-service'
     LoginPage,
     RegisterPage,
     ClientePage,
-    TrabajadorPage
+    TrabajadorPage,
+    BusquedaPage,
+    ResultsPage
   ],
   providers: [
     StatusBar,

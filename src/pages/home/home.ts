@@ -51,12 +51,8 @@ export class HomePage {
   getAuthenticatedCliente() {
     this.authService.getAuthCliente().subscribe(
       cliente => {
-        console.log(cliente);
         this.userDataService.setCliente(cliente);
-        console.log(cliente);
-        this.navCtrl.setRoot(ClientePage,{
-          cliente: cliente
-        });
+        this.navCtrl.setRoot(ClientePage)
       },
       error => {
           console.log('Error en cliente');

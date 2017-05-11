@@ -1,18 +1,74 @@
-<!--
-  Generated template for the Busqueda page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>busqueda</ion-title>
+    <ion-title>Busqueda</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <form>
+    <ion-list>
+      <ion-list>
+        <ion-item>
+          <ion-label>Dirección</ion-label>
+          <ion-input type="text" [(ngModel)]="solicitud.direccion" placeholder="Direccion" name="direccion"></ion-input>
+        </ion-item>
 
+        <ion-item>
+          <ion-label>Fecha</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY" min="{{minDate}}" [(ngModel)]="solicitud.fecha" name="fecha"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Descripcion</ion-label>
+          <ion-textarea [(ngModel)]="solicitud.descripcion" name="descripcion"></ion-textarea>
+        </ion-item>
+      </ion-list>
+
+    <ion-list radio-group [(ngModel)]="categoria.nombre" name="categoria">
+      <ion-list-header>Categoria</ion-list-header>
+        <ion-item>
+          <ion-label>Hogar</ion-label>
+          <ion-radio value="hogar"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Alimentación</ion-label>
+          <ion-radio value="alimentacion"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Belleza</ion-label>
+          <ion-radio value="belleza"></ion-radio>
+        </ion-item>
+    </ion-list>
+    <div [ngSwitch]="categoria.nombre">
+      <ion-list  *ngSwitchCase="'hogar'" radio-group [(ngModel)]="interes.nombre" name="interes">
+        <ion-list-header>Hogar</ion-list-header>
+          <ion-item *ngFor="let x of areas_interes['Hogar']">
+            <ion-label>{{x}}</ion-label>
+            <ion-radio value="{{x}}"></ion-radio>
+          </ion-item>
+      </ion-list>
+      <ion-list *ngSwitchCase="'alimentacion'" radio-group [(ngModel)]="interes.nombre" name="interes">
+        <ion-list-header>Alimentacion</ion-list-header>
+          <ion-item *ngFor="let x of areas_interes['Alimentacion']">
+            <ion-label>{{x}}</ion-label>
+            <ion-radio value="{{x}}"></ion-radio>
+          </ion-item>
+      </ion-list>
+      <ion-list *ngSwitchCase="'belleza'" radio-group [(ngModel)]="interes.nombre" name="interes">
+        <ion-list-header>Belleza</ion-list-header>
+          <ion-item *ngFor="let x of areas_interes['Belleza']">
+            <ion-label>{{x}}</ion-label>
+            <ion-radio value="{{x}}"></ion-radio>
+          </ion-item>
+      </ion-list>
+    </div>
+    <ion-item>
+      <button ion-button outline (click)="goToResults()" block>Ver Resultados</button>
+    </ion-item>
+    </ion-list>
+
+  </form>
 </ion-content>
