@@ -4,8 +4,8 @@ import { IonicPage, NavController, AlertController, Events, LoadingController, L
 import { AuthService } from '../../providers/auth-service';
 import {RegisterPage} from '../register/register';
 import {TrabajadorPage} from '../trabajador/trabajador';
+import {ClientePage} from '../cliente/cliente';
 
-import { SERVER_URL } from '../../providers/services-util';
 import { UserDataService } from '../../providers/user-data-service';
 
 @IonicPage()
@@ -17,7 +17,8 @@ export class LoginPage {
 
   username: string;
 	password: string;
-	authenticatingUser: boolean;
+	authenticatingTrabajador: boolean;
+  authenticatingCliente: boolean;
   loader: Loading;
 
   constructor(public navCtrl: NavController,
@@ -26,62 +27,79 @@ export class LoginPage {
               public events: Events,
               public userDataService: UserDataService,
               public loadingCtrl: LoadingController) {
+      this.authenticatingCliente = false;
+      this.authenticatingTrabajador = false;
   }
 
   ionViewDidLoad() {
-		if(localStorage.getItem('token')) {
-      console.log('Entre aca');
-      console.log(localStorage.getItem('token'));
-			this.authenticatingUser = true;
-			this.getAuthenticatedCustomer();
-		} else {
-			this.authenticatingUser = false;
-		}
+
   }
 
-  iniciarSesion() {
-		this.presentLoader();
+  iniciarSesion(){
+    this.presentLoader();
+    this.iniciarSesionTrabajador();
+    this.iniciarSesionCliente();
+    this.dismissLoader();
+  }
+
+  iniciarSesionTrabajador() {
 		this.authService.login(this.username, this.password).subscribe(
 			token => {
-				console.log(token.token);
 				localStorage.setItem('token', token.token);
 				this.authService.reloadToken();
-				this.getAuthenticatedCustomer();
+				this.getAuthenticatedTrabajador();
 			},
 			err => {
-				this.authenticatingUser = false;
-				let msg = "error " + SERVER_URL;
-				if (err.status == 500) {
-						msg = "error de conexión, porfavor intenta mas tarde";
-				} else if (err.status == 400) {
-						msg = "Las credenciales ingresadas no son correctas!";
-				}
-				var alert = this.alertCtrl.create({
-						title: 'Error al iniciar sesión',
-						subTitle: msg,
-						buttons: ['OK']
-				});
-				this.dismissLoader();
-				alert.present();
 			})
   }
 
-  getAuthenticatedCustomer() {
+  iniciarSesionCliente() {
+    this.authService.login(this.username, this.password).subscribe(
+      token => {
+        localStorage.setItem('token', token.token);
+        this.authService.reloadToken();
+        this.getAuthenticatedCliente();
+      },
+      err => {
+      })
+  }
+
+
+  getAuthenticatedTrabajador() {
     this.authService.getAuthTrabajador().subscribe(
       trabajador => {
-        this.events.publish('trabajador:logged', trabajador);
-        console.log(trabajador);
+        this.authenticatingTrabajador = true;
+        console.log("EL trabajador: "  +trabajador);
         this.userDataService.setTrabajador(trabajador);
-        console.log(trabajador);
+        console.log("El trabajador: " +trabajador);
         this.navCtrl.setRoot(TrabajadorPage);
-        this.dismissLoader();
     },
     error => {
-        this.authenticatingUser = false;
-        this.dismissLoader();
     }
     );
+  }
 
+  getAuthenticatedCliente() {
+    this.authService.getAuthCliente().subscribe(
+      cliente => {
+        console.log("El cliente " + cliente);
+        this.userDataService.setCliente(cliente);
+        this.navCtrl.setRoot(ClientePage);
+        console.log("El cliente " + cliente);
+      },
+      error => {
+        if( !this.authenticatingTrabajador )
+        {
+          let msg = "Los datos ingresados no son correctas!";
+          var alert = this.alertCtrl.create({
+            title: 'Error al iniciar sesión',
+            subTitle: msg,
+            buttons: ['OK']
+          });
+          alert.present();
+        }
+      }
+    );
   }
 
   presentLoader() {

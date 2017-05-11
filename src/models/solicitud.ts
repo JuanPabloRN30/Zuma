@@ -4,7 +4,7 @@ import { Cliente, Trabajador } from './user';
 export class Solicitud
 {
   id: number;
-  fecha: string;
+  fecha: Date;
   direccion: string;
   estado: string;
   cliente: Cliente;

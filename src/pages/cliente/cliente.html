@@ -1,12 +1,59 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>cliente</ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <button ion-button menuToggle left>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      {{cliente.first_name}}
+    </ion-title>
+  </ion-toolbar>
 
 </ion-header>
 
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content padding>
+  <ion-content>
+    <ion-list>
+      <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon name="{{p.icon}}"></ion-icon> <span>{{ p.title }}</span>
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
+<ion-nav [root]="rootPage" #content></ion-nav>
+
+
+<ion-content>
+
+  <ion-label text-center> Lista de Solicitudes </ion-label>
+  <ion-card>
+    <img src="assets/img/Hogar.png"/>
+    <ion-item>
+        <ion-card-header>
+          Juan Pablo Rodríguez N.
+        </ion-card-header>
+        <ion-card-content>
+          <p>Av 26 #40-31 Apto 503</p>
+          <p>30 de Junio de 2017</p>
+          <p>Electricidad</p>
+          <p>Estado: Pendiente </p>
+        </ion-card-content>
+    </ion-item>
+  </ion-card>
+
+  <ion-fab bottom right >
+    <button ion-fab><ion-icon name="add" md="md-add"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab (click)="buscarHogar()"><ion-icon name="home"></ion-icon></button>
+      <button ion-fab (click)="buscarAlimentacion()"><ion-icon name="restaurant"></ion-icon></button>
+      <button ion-fab (click)="buscarBelleza()"><ion-icon name="body"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

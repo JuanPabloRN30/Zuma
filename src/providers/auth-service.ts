@@ -61,23 +61,6 @@ export class AuthService {
     console.log('token updated: ' + this.token);
    }
 
-  getRemoteData()
-  {
-    this.http.get('api/categoria/Hogar/').map(
-      res => res.json()
-    ).subscribe(
-      data =>{
-        console.log(data);
-        console.log(data.nombre);
-        console.log(data.intereses[0]);
-        console.log(data.code);
-        console.log(data.linenos);
-        console.log(data.language);
-        console.log(data.style);
-      }
-    );
-  }
-
   private handleError(error: any): Observable<any> {
     console.error('An error occurred', error);
     return Observable.throw(error.message || error);

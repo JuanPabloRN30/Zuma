@@ -49,22 +49,16 @@ export class RegisterPage {
       this.usuario = new User({});
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad Register');
-  }
-
   registrar() {
     this.usuario.username = this.usuario.email;
     this.crearIntereses();
     if( this.tipo == "trabajador" )
     {
       this.trabajador = new Trabajador(this.usuario);
-      console.log("Entre a trabajador")
       this.registrarTrabajador( );
     }
     else if( this.tipo == "cliente" )
     {
-      console.log("Entre a cliente")
       this.cliente = new Cliente( this.usuario );
       this.registrarCliente( );
     }
@@ -110,23 +104,15 @@ export class RegisterPage {
           this.interes.push( aux );
         }
     }
-    for( let current of this.interes )
-    {
-      console.log("ENtre aca");
-      console.log( current )
-    }
     this.usuario.intereses = this.interes;
   }
 
   registrarTrabajador( )
   {
-    console.log( this.trabajador.export() )
     this.userService.saveTrabajador(this.trabajador).subscribe(
       trabajador => {
         this.authService.login(this.trabajador.username, this.trabajador.password).subscribe(
           token => {
-            console.log('Entre al token')
-            console.log(token);
             localStorage.setItem('token', token.token);
             this.authService.reloadToken();
             this.getAuthenticatedTrabajador();
@@ -134,7 +120,6 @@ export class RegisterPage {
           error => {
             console.log(error);
           });
-        //this.getAuthenticatedTrabajador()
       },
       (error: Response) => {
         console.log(error);
@@ -165,7 +150,15 @@ export class RegisterPage {
   {
     this.userService.saveCliente(this.cliente).subscribe(
       cliente => {
-        //this.getAuthenticatedCliente()
+        this.authService.login(this.cliente.username, this.cliente.password).subscribe(
+          token => {
+            localStorage.setItem('token', token.token);
+            this.authService.reloadToken();
+            this.getAuthenticatedCliente();
+          },
+          error => {
+            console.log(error);
+          });
       },
       (error: Response) => {
         console.log(error);
@@ -197,7 +190,6 @@ export class RegisterPage {
 			trabajador => {
 				this.events.publish('trabajador:logged', trabajador);
 				this.userDataService.setTrabajador(trabajador);
-				console.log(trabajador);
 				this.navCtrl.setRoot(TrabajadorPage);
 			},
 			error => {
@@ -211,7 +203,6 @@ export class RegisterPage {
 			cliente => {
 				this.events.publish('cliente:logged', cliente);
 				this.userDataService.setCliente(cliente);
-				console.log(cliente);
 				this.navCtrl.setRoot(ClientePage);
 			},
 			error => {
