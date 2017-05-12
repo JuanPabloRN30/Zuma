@@ -8,6 +8,7 @@ import { Categoria } from '../../models/categoria'
 import {LoginPage} from '../login/login';
 import {HomePage} from '../home/home';
 import {BusquedaPage} from '../busqueda/busqueda';
+import {HistorialPage} from '../historial/historial';
 
 import { SolicitudesService } from '../../providers/solicitudes-service';
 import { UserDataService } from '../../providers/user-data-service';
@@ -43,7 +44,7 @@ export class ClientePage {
   ngOnInit()
   {
     this.cliente = this.userDataService.getCliente();
-    this.solicitudesService.obtenerSolicitudesCliente("Pendiente").subscribe(
+    this.solicitudesService.obtenerSolicitudesCliente("Pendiente,Aceptada").subscribe(
       (solicitudes) => {
         this.solicitudes = solicitudes;
         this.solicitudes.reverse();
@@ -86,9 +87,12 @@ export class ClientePage {
     else if(page.title == 'Configuraciones') {
         this.navCtrl.setRoot(page.component);
     }
-    else {
+    else if( page.title == 'Historial de Solicitudes' )
+      this.navCtrl.push(page.component, {
+        usuario: 'Cliente'
+      });
+    else
       this.navCtrl.push(page.component);
-    }
   }
 
 }

@@ -10,7 +10,7 @@
 <ion-content>
   <form>
     <ion-list radio-group [(ngModel)]="categoria.nombre" name="categoria">
-      <ion-list-header>Categoria</ion-list-header>
+      <ion-list-header class='header'>Categoria</ion-list-header>
         <ion-item>
           <ion-label>Hogar</ion-label>
           <ion-radio value="hogar"></ion-radio>
@@ -26,14 +26,14 @@
     </ion-list>
     <div [ngSwitch]="categoria.nombre">
       <ion-list  *ngSwitchCase="'hogar'" radio-group [(ngModel)]="interes.nombre" name="interes">
-        <ion-list-header>Hogar</ion-list-header>
+        <ion-list-header class='header'>Hogar</ion-list-header>
           <ion-item *ngFor="let x of areas_interes['Hogar']">
             <ion-label>{{x}}</ion-label>
             <ion-radio value="{{x}}"></ion-radio>
           </ion-item>
       </ion-list>
       <ion-list *ngSwitchCase="'alimentacion'" radio-group [(ngModel)]="interes.nombre" name="interes">
-        <ion-list-header>Alimentacion</ion-list-header>
+        <ion-list-header class='header'>Alimentacion</ion-list-header>
           <ion-item *ngFor="let x of areas_interes['Alimentacion']">
             <ion-label>{{x}}</ion-label>
             <ion-radio value="{{x}}"></ion-radio>
@@ -48,7 +48,7 @@
       </ion-list>
     </div>
     <ion-item>
-      <button ion-button outline (click)="goToResults()" block>Ver Resultados</button>
+      <button class='resultados-button' (click)="goToResults()" >Ver Resultados</button>
     </ion-item>
   </form>
 </ion-content>

@@ -8,32 +8,18 @@
 </ion-header>
 
 <ion-content>
-  <ion-label text-center> Lista de Solicitudes </ion-label>
-  <ion-card *ngFor="let solicitud of solicitudes">
-    <ion-item>
-      <img src="assets/img/{{solicitud.interes.categoria.nombre}}.png"/>
-        <ion-card-header>
-          {{ solicitud.cliente.first_name }}
-        </ion-card-header>
-        <ion-card-content>
-          <p>{{ solicitud.interes.nombre }}</p>
-          <p>Estado: {{ solicitud.estado }}</p>
-        </ion-card-content>
-    </ion-item>
-
-    <ion-row no-padding>
-      <ion-col>
-        <button ion-button icon-only clear light (click)="aceptarSolicitud( solicitud )">
-            <ion-icon name="checkmark"></ion-icon>
-            Aceptar
-        </button>
-      </ion-col>
-      <ion-col text-right>
-         <button ion-button icon-only color="danger" clear danger (click)="rechazarSolicitud( solicitud )">
-            <ion-icon name="close"></ion-icon>
-            Rechazar
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-card>
+  <section class='product-cards'>
+    <ion-card class='card-product' *ngFor="let solicitud of solicitudes">
+      <ion-item>
+        <img src="assets/img/{{solicitud.interes.categoria.nombre}}.png"/>
+          <ion-card-header>
+            {{ solicitud.cliente.first_name }}
+          </ion-card-header>
+          <ion-card-content>
+            <p>{{ solicitud.interes.nombre }}</p>
+            <p>Estado: {{ solicitud.estado }}</p>
+          </ion-card-content>
+      </ion-item>
+    </ion-card>
+  </section>
 </ion-content>

@@ -48,7 +48,7 @@ export class SolicitudesService {
   {
     let solicitudesClienteUrl: string = `${SERVER_URL}/api/cliente/solicitud/`;
     if( estado != "" )
-        solicitudesClienteUrl+= '?estado=Aceptada';
+        solicitudesClienteUrl+= '?estado='+estado;
     var headers = new Headers({ 'Content-Type': 'application/json',
                              'Accept': 'application/json',
                              'Authorization': `Token ${this.token}`
@@ -63,7 +63,7 @@ export class SolicitudesService {
   {
     let solicitudesTrabajadorUrl: string = `${SERVER_URL}/api/trabajador/solicitud/`;
     if( estado != "" )
-        solicitudesTrabajadorUrl+= '?estado=Aceptada';
+        solicitudesTrabajadorUrl+= '?estado='+estado;
     var headers = new Headers({ 'Content-Type': 'application/json',
                              'Accept': 'application/json',
                              'Authorization': `Token ${this.token}`

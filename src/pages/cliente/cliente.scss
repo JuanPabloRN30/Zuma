@@ -1,2 +1,39 @@
 page-cliente {
+
+  .product-cards {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .card-product {
+      margin: 10px;
+      display: flex;
+      flex-direction: column;
+
+      width: calc(100% - 10px);
+
+
+
+      @for $i from 2 through 5 {
+        @media all and (min-width: #{300px * ($i - 1)}) {
+          width: calc(#{(100% / $i)} - 10px);
+        }
+      }
+
+      ion-card-header > p{
+        font-weight: bold;
+      }
+
+      ion-item {
+        margin-top: auto;
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+
 }

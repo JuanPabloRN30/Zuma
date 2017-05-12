@@ -32,18 +32,21 @@
 <ion-content>
 
   <ion-label text-center> Lista de Solicitudes </ion-label>
-  <ion-card *ngFor="let solicitud of solicitudes">
-    <img src="assets/img/{{solicitud.interes.categoria.nombre}}.png"/>
-    <ion-item>
-        <ion-card-header>
-          Trabajador: {{ solicitud.trabajador.first_name }}
-        </ion-card-header>
-        <ion-card-content>
-          <p>{{ solicitud.interes.nombre }}</p>
-          <p>Estado: {{ solicitud.estado }} </p>
-        </ion-card-content>
-    </ion-item>
-  </ion-card>
+  <section class='product-cards'>
+    <ion-card class='card-product' *ngFor="let solicitud of solicitudes">
+      <img src="assets/img/{{solicitud.interes.categoria.nombre}}.png"/>
+      <ion-item>
+          <ion-card-header>
+            <p>Trabajador:</p>
+            <p>{{ solicitud.trabajador.first_name }}</p>
+          </ion-card-header>
+          <ion-card-content>
+            <p>{{ solicitud.interes.nombre }}</p>
+            <p>Estado: {{ solicitud.estado }} </p>
+          </ion-card-content>
+      </ion-item>
+    </ion-card>
+  </section>
 
   <ion-fab bottom right >
     <button ion-fab (click)=buscar()><ion-icon name="add" md="md-add"></ion-icon></button>

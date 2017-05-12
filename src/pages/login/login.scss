@@ -1,17 +1,56 @@
-page-login {
+.login-page{
+//page-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 
-  ion-content {
+  img{
+    display: block;
+    width: 60vh;
+  }
+
+  ion-row{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 10px;
+    width: 100%;
+
+    @media all and (min-width: 400px) {
+      flex-direction: row;
+    }
+
+    .login-button {
+      padding: 10px;
+      display: block;
+      color: #488aff;
+      outline: 1px solid;
+      background: white;
+      box-shadow: 0 0 20px 20px transparent;
+      margin: 5px auto;
+      box-sizing: border-box;
+      transition: all 0.3s ease-out;
+      font-weight: bold;
+      text-transform: uppercase;
+
+      &:active {
+        box-shadow: 0 0 0 0 #488aff;
+      }
+    }
   }
 
-  form{
-    padding: 0 20px;
-  }
+  @media all and (min-width: 500px) {
+    &{
+      margin: 70px; 
+    }
 
-  ion-footer{
-    text-align: center;
+    form {
+      width: 400px;
+      margin: auto;
+    }
   }
-
+//}
 }

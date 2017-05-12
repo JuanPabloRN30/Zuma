@@ -1,17 +1,21 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Registrar</ion-title>
+    <ion-title text-center>Registrar</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <form>
     <ion-list>
       <ion-list>
-        <ion-list-header>Información</ion-list-header>
+        <ion-list-header>
+          <section class='header'>
+              Información
+          </section>
+        </ion-list-header>
         <ion-item>
           <ion-input type="text" [(ngModel)]="usuario.first_name" placeholder="Nombre Completo" name="first_name"></ion-input>
         </ion-item>
@@ -26,7 +30,11 @@
       </ion-list>
 
       <ion-list radio-group [(ngModel)]="tipo" name="tipo">
-        <ion-list-header>Tipo de Usuario</ion-list-header>
+        <ion-list-header>
+          <section class='header'>
+            Tipo de Usuario
+          </section>
+        </ion-list-header>
         <ion-item>
           <ion-label>Trabajador</ion-label>
           <ion-radio value="trabajador"></ion-radio>
@@ -38,7 +46,12 @@
       </ion-list>
 
       <ion-list>
-        <ion-list-header>Intereses</ion-list-header>
+
+        <ion-list-header>
+          <section class='header'>
+            Información
+          </section>
+        </ion-list-header>
         <ion-item>
           <ion-label>Hogar</ion-label>
           <ion-select multiple = "true" [(ngModel)]="intereses_h" name="intereses_h" > <!-- [(ngModel)]="toppings" multiple="true">-->
@@ -60,9 +73,11 @@
           </ion-select>
         </ion-item>
       </ion-list>
-      <ion-item>
-        <button ion-button outline (click)="registrar()" block>Registrar</button>
-      </ion-item>
+      <div>
+        <!--<button ion-button outline (click)="registrar()" block>Registrar</button>-->
+        <button class='register-button' (click)="registrar()">Registrar</button>
+      </div>
       </ion-list>
   </form>
+
 </ion-content>

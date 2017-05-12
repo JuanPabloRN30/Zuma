@@ -1,3 +1,33 @@
 page-register {
 
+  ion-list-header .header{
+    color: #488aff;
+    font-weight: bold;
+  }
+
+  .register-button {
+    padding: 10px;
+    display: block;
+    width: 90%;
+    color: #488aff;
+    outline: 1px solid;
+    background: white;
+    box-shadow: 0 0 20px 20px transparent;
+    margin: 5px auto;
+    box-sizing: border-box;
+    transition: all 0.3s ease-out;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &:active {
+      box-shadow: 0 0 0 0 #488aff;
+    }
+  }
+
+  @media all and (min-width: 500px) {
+    form {
+      width: 400px;
+      margin: auto;
+    }
+  }
 }
