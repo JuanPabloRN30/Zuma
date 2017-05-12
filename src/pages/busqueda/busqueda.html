@@ -9,24 +9,6 @@
 
 <ion-content>
   <form>
-    <ion-list>
-      <ion-list>
-        <ion-item>
-          <ion-label>Dirección</ion-label>
-          <ion-input type="text" [(ngModel)]="solicitud.direccion" placeholder="Direccion" name="direccion"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Fecha</ion-label>
-          <ion-datetime displayFormat="MM/DD/YYYY" min="{{minDate}}" [(ngModel)]="solicitud.fecha" name="fecha"></ion-datetime>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Descripcion</ion-label>
-          <ion-textarea [(ngModel)]="solicitud.descripcion" name="descripcion"></ion-textarea>
-        </ion-item>
-      </ion-list>
-
     <ion-list radio-group [(ngModel)]="categoria.nombre" name="categoria">
       <ion-list-header>Categoria</ion-list-header>
         <ion-item>
@@ -68,7 +50,5 @@
     <ion-item>
       <button ion-button outline (click)="goToResults()" block>Ver Resultados</button>
     </ion-item>
-    </ion-list>
-
   </form>
 </ion-content>

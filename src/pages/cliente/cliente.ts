@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, MenuController, LoadingController 
 
 import { Cliente } from '../../models/user'
 import { Solicitud } from '../../models/solicitud'
+import { Categoria } from '../../models/categoria'
 
 import {LoginPage} from '../login/login';
 import {HomePage} from '../home/home';
@@ -10,6 +11,8 @@ import {BusquedaPage} from '../busqueda/busqueda';
 
 import { SolicitudesService } from '../../providers/solicitudes-service';
 import { UserDataService } from '../../providers/user-data-service';
+
+import { areas_interes } from '../../providers/services-util';
 
 @IonicPage()
 @Component({
@@ -29,19 +32,26 @@ export class ClientePage {
               public userDataService: UserDataService,
               public solicitudesService: SolicitudesService) {
     this.pages = [
-      { title: 'Lista de Solicitudes', component: ClientePage, icon: 'folder-opne' },
+      { title: 'Lista de Solicitudes', component: ClientePage, icon: 'folder-open' },
+      { title: 'Historial de Solicitudes', component: HistorialPage, icon: 'folder-open' },
       { title: 'Configuración', component: LoginPage, icon: 'settings' },
       { title: 'Cerrar Sesión', component: null, icon: 'power' },
     ];
+    menuCtrl.enable(true);
   }
 
   ngOnInit()
   {
     this.cliente = this.userDataService.getCliente();
-    this.solicitudesService.obtenerSolicitudesCliente().subscribe(
+    this.solicitudesService.obtenerSolicitudesCliente("Pendiente").subscribe(
       (solicitudes) => {
         this.solicitudes = solicitudes;
         this.solicitudes.reverse();
+        for( var i = 0 ; i < this.solicitudes.length; i++ )
+        {
+          var nombre_interes = this.solicitudes[ i ].interes.nombre;
+          this.solicitudes[ i ].interes.categoria = new Categoria( {nombre: this.obtenerCategoria( nombre_interes )} )
+        }
       },
       (error) => {
 
@@ -49,16 +59,16 @@ export class ClientePage {
     )
   }
 
-  openMenu() {
-    this.menuCtrl.open();
-  }
-
-  closeMenu() {
-    this.menuCtrl.close();
-  }
-
-  toggleMenu() {
-    this.menuCtrl.toggle();
+  obtenerCategoria( nombre: string ){
+    for (var i = 0; i < areas_interes['Hogar'].length ; i++)
+      if( areas_interes['Hogar'][ i ] == nombre )
+        return 'Hogar';
+    for (var i = 0; i < areas_interes['Alimentacion'].length ; i++)
+      if( areas_interes['Alimentacion'][ i ] == nombre )
+        return 'Alimentacion'
+    for (var i = 0; i < areas_interes['Belleza'].length ; i++)
+      if( areas_interes['Belleza'][ i ] == nombre )
+        return 'Belleza'
   }
 
   buscar(){

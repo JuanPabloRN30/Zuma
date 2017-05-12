@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 
 import { Solicitud } from '../../models/solicitud'
-import { Trabajador } from '../../models/user'
 import { Categoria } from '../../models/categoria'
-
-import {LoginPage} from '../login/login';
-import {HomePage} from '../home/home';
-import {HistorialPage} from '../historial/historial';
+import { Trabajador } from '../../models/user'
 
 import { areas_interes } from '../../providers/services-util';
 
@@ -17,35 +13,20 @@ import { UserDataService } from '../../providers/user-data-service';
 
 @IonicPage()
 @Component({
-  selector: 'page-trabajador',
-  templateUrl: 'trabajador.html',
+  selector: 'page-historial',
+  templateUrl: 'historial.html',
 })
-export class TrabajadorPage {
+export class HistorialPage {
 
   trabajador: Trabajador;
   solicitudes: Solicitud[];
-  pages: Array<{title: string, component: any, icon: string}>;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public menuCtrl: MenuController,
               public loadingCtrl: LoadingController,
               public alertCtrl: AlertController,
               public solicitudesService: SolicitudesService,
-              public userDataService: UserDataService
-              ) {
-
-      this.pages = [
-        { title: 'Lista de Solicitudes', component: TrabajadorPage, icon: 'folder-open' },
-        { title: 'Historial de Solicitudes', component: HistorialPage, icon: 'folder-open' },
-        { title: 'Configuración', component: LoginPage, icon: 'settings' },
-        { title: 'Cerrar Sesión', component: null, icon: 'power' },
-      ];
-      menuCtrl.enable(true);
-  }
-
-  ionViewDidLoad(){
-
+              public userDataService: UserDataService) {
   }
 
   ngOnInit()
@@ -55,7 +36,7 @@ export class TrabajadorPage {
   }
 
   loadData(){
-    this.solicitudesService.obtenerSolicitudesTrabajador("Pendiente").subscribe(
+    this.solicitudesService.obtenerSolicitudesTrabajador("").subscribe(
       (solicitudes) => {
         this.solicitudes = solicitudes;
         this.solicitudes.reverse();
@@ -119,20 +100,4 @@ export class TrabajadorPage {
         alert.present();
       })
   }
-
-
-  openPage(page) {
-    if(page.title == 'Cerrar Sesión') {
-      let loader = this.loadingCtrl.create({spinner: 'crescent'});
-      loader.present();
-      localStorage.removeItem('token');
-      this.navCtrl.setRoot(HomePage);
-      loader.dismiss();
-    }
-    else if( page.title == 'Lista de Solicitudes' )
-      this.loadData();
-    else
-      this.navCtrl.push(page.component);
-  }
-
 }

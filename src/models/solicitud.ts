@@ -30,10 +30,11 @@ export class Solicitud
 
   export():any{
     var obj: any = {};
-    obj.fecha = this.fecha;
-    obj.direccion = this.direccion;
-    obj.descripcion = this.descripcion;
-    //obj.clienteusername = this.cliente.username;
+//    obj.fecha = this.fecha;
+//    obj.direccion = this.direccion;
+//    obj.descripcion = this.descripcion;
+    obj.id = this.id;
+    obj.estado = this.estado;
     obj.trabajadorusername = this.trabajador.username;
     obj.interesnombre = this.interes.nombre;
     return obj;

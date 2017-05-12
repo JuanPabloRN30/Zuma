@@ -13,6 +13,7 @@ import { ClientePage } from '../pages/cliente/cliente';
 import { TrabajadorPage } from '../pages/trabajador/trabajador';
 import { BusquedaPage } from '../pages/busqueda/busqueda';
 import { ResultsPage } from '../pages/results/results';
+import { HistorialPage } from '../pages/historial/historial';
 
 import { AuthService } from '../providers/auth-service'
 import { UserDataService } from '../providers/user-data-service'
@@ -27,7 +28,8 @@ import { SolicitudesService } from '../providers/solicitudes-service'
     ClientePage,
     TrabajadorPage,
     BusquedaPage,
-    ResultsPage
+    ResultsPage,
+    HistorialPage
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ import { SolicitudesService } from '../providers/solicitudes-service'
     ClientePage,
     TrabajadorPage,
     BusquedaPage,
-    ResultsPage
+    ResultsPage,
+    HistorialPage
   ],
   providers: [
     StatusBar,

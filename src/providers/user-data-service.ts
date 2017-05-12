@@ -35,6 +35,19 @@ export class UserDataService {
     this.cliente = cliente;
   }
 
+  getTipo(username: string, password: string): Observable<any>{
+    let verificarTipo: string = `${SERVER_URL}/api/usuario/tipo/`;
+    var headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' })
+    var options = new RequestOptions({ headers: headers });
+    return this.http.post(verificarTipo,{
+        username: username,
+        password: password
+      }, options)
+    .map(response => response.json())
+    .catch(this.handleError)
+
+  }
+
   saveTrabajador(trabajador: Trabajador): Observable<Trabajador> {
    let createTrabajadorURI: string = `${SERVER_URL}/api/trabajador/`
    var headers = new Headers({ 'Content-Type': 'application/json',

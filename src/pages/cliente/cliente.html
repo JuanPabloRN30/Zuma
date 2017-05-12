@@ -1,15 +1,14 @@
 <ion-header>
-
-  <ion-toolbar>
-    <button ion-button menuToggle left>
-      <ion-icon name="menu"></ion-icon>
+  <ion-navbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
     </button>
-    <ion-title>
+    <ion-title text-center>
       {{cliente.first_name}}
     </ion-title>
-  </ion-toolbar>
-
+  </ion-navbar>
 </ion-header>
+
 
 <ion-menu [content]="content">
   <ion-header>
@@ -34,14 +33,12 @@
 
   <ion-label text-center> Lista de Solicitudes </ion-label>
   <ion-card *ngFor="let solicitud of solicitudes">
+    <img src="assets/img/{{solicitud.interes.categoria.nombre}}.png"/>
     <ion-item>
-      <img src="assets/img/Hogar.png"/>
         <ion-card-header>
-          {{ solicitud.trabajador.first_name }}
+          Trabajador: {{ solicitud.trabajador.first_name }}
         </ion-card-header>
         <ion-card-content>
-          <p>{{ solicitud.direccion }}</p>
-          <p>{{ solicitud.fecha | date:'longDate' }}</p>
           <p>{{ solicitud.interes.nombre }}</p>
           <p>Estado: {{ solicitud.estado }} </p>
         </ion-card-content>

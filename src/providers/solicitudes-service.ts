@@ -18,26 +18,7 @@ export class SolicitudesService {
     this.token = localStorage.getItem('token');
   }
 
-  /*getRemoteData()
-  {
-    this.http.get('api/categoria/Hogar/').map(
-      res => res.json()
-    ).subscribe(
-      data =>{
-        console.log(data);
-        console.log(data.nombre);
-        console.log(data.intereses[0]);
-        console.log(data.code);
-        console.log(data.linenos);
-        console.log(data.language);
-        console.log(data.style);
-      }
-    );
-  }*/
-
   createSolicitud(solicitud: Solicitud): Observable<any> {
-    console.log( "Entre aca" )
-    console.log( solicitud );
    let createSolicitudUrl: string = `${SERVER_URL}/api/solicitud/`;
     var headers = new Headers({ 'Content-Type': 'application/json',
                                 'Accept': 'application/json',
@@ -50,9 +31,24 @@ export class SolicitudesService {
                     .catch(this.handleError)
   }
 
-  obtenerSolicitudesCliente(): Observable<Solicitud[]>
+  editSolicitud(solicitud: Solicitud): Observable<any> {
+   let aceptarSolicitudUrl: string = `${SERVER_URL}/api/solicitud/edit/`;
+    var headers = new Headers({ 'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'Authorization': `Token ${this.token}`
+                            });
+    var body = JSON.stringify(solicitud.export());
+    var options = new RequestOptions({ headers: headers });
+    return this.http.post(aceptarSolicitudUrl, body, options)
+                    .map(response => new Solicitud(response.json()))
+                    .catch(this.handleError)
+  }
+
+  obtenerSolicitudesCliente(estado: string): Observable<Solicitud[]>
   {
     let solicitudesClienteUrl: string = `${SERVER_URL}/api/cliente/solicitud/`;
+    if( estado != "" )
+        solicitudesClienteUrl+= '?estado=Aceptada';
     var headers = new Headers({ 'Content-Type': 'application/json',
                              'Accept': 'application/json',
                              'Authorization': `Token ${this.token}`
@@ -63,9 +59,11 @@ export class SolicitudesService {
                     .catch(this.handleError)
   }
 
-  obtenerSolicitudesTrabajador(): Observable<Solicitud[]>
+  obtenerSolicitudesTrabajador(estado: string): Observable<Solicitud[]>
   {
     let solicitudesTrabajadorUrl: string = `${SERVER_URL}/api/trabajador/solicitud/`;
+    if( estado != "" )
+        solicitudesTrabajadorUrl+= '?estado=Aceptada';
     var headers = new Headers({ 'Content-Type': 'application/json',
                              'Accept': 'application/json',
                              'Authorization': `Token ${this.token}`

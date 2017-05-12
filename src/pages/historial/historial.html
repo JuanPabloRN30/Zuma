@@ -1,37 +1,17 @@
+
 <ion-header>
-  <ion-navbar text-center>
-    <button ion-button menuToggle icon-only>
-      <ion-icon name='menu'></ion-icon>
-    </button>
-    <ion-title>
-      {{trabajador.first_name}}
+  <ion-navbar>
+    <ion-title text-center>
+      Historial - Solicitudes
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-menu [content]="content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-content>
-    <ion-list>
-      <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">
-        <ion-icon name="{{p.icon}}"></ion-icon> <span>{{ p.title }}</span>
-      </button>
-    </ion-list>
-  </ion-content>
-</ion-menu>
-
-<ion-nav [root]="rootPage" #content></ion-nav>
-
 <ion-content>
   <ion-label text-center> Lista de Solicitudes </ion-label>
   <ion-card *ngFor="let solicitud of solicitudes">
-    <img src="assets/img/{{solicitud.interes.categoria.nombre}}.png"/>
     <ion-item>
+      <img src="assets/img/{{solicitud.interes.categoria.nombre}}.png"/>
         <ion-card-header>
           {{ solicitud.cliente.first_name }}
         </ion-card-header>

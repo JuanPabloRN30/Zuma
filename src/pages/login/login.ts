@@ -17,8 +17,6 @@ export class LoginPage {
 
   username: string;
 	password: string;
-	authenticatingTrabajador: boolean;
-  authenticatingCliente: boolean;
   loader: Loading;
 
   constructor(public navCtrl: NavController,
@@ -27,8 +25,6 @@ export class LoginPage {
               public events: Events,
               public userDataService: UserDataService,
               public loadingCtrl: LoadingController) {
-      this.authenticatingCliente = false;
-      this.authenticatingTrabajador = false;
   }
 
   ionViewDidLoad() {
@@ -36,10 +32,24 @@ export class LoginPage {
   }
 
   iniciarSesion(){
-    this.presentLoader();
-    this.iniciarSesionTrabajador();
-    this.iniciarSesionCliente();
-    this.dismissLoader();
+    if( !this.username || !this.password )
+    {
+      this.showError();
+    }
+    else
+    {
+      this.presentLoader();
+      this.userDataService.getTipo( this.username, this.password ).subscribe(
+        data =>{
+          if( data.tipo == "ninguno" )
+          this.showError();
+          else if( data.tipo == "trabajador" )
+          this.iniciarSesionTrabajador();
+          else
+          this.iniciarSesionCliente();
+        }
+      )
+    }
   }
 
   iniciarSesionTrabajador() {
@@ -50,6 +60,7 @@ export class LoginPage {
 				this.getAuthenticatedTrabajador();
 			},
 			err => {
+
 			})
   }
 
@@ -61,6 +72,7 @@ export class LoginPage {
         this.getAuthenticatedCliente();
       },
       err => {
+
       })
   }
 
@@ -68,11 +80,9 @@ export class LoginPage {
   getAuthenticatedTrabajador() {
     this.authService.getAuthTrabajador().subscribe(
       trabajador => {
-        this.authenticatingTrabajador = true;
-        console.log("EL trabajador: "  +trabajador);
         this.userDataService.setTrabajador(trabajador);
-        console.log("El trabajador: " +trabajador);
         this.navCtrl.setRoot(TrabajadorPage);
+        this.dismissLoader();
     },
     error => {
     }
@@ -82,22 +92,11 @@ export class LoginPage {
   getAuthenticatedCliente() {
     this.authService.getAuthCliente().subscribe(
       cliente => {
-        console.log("El cliente " + cliente);
         this.userDataService.setCliente(cliente);
         this.navCtrl.setRoot(ClientePage);
-        console.log("El cliente " + cliente);
+        this.dismissLoader();
       },
       error => {
-        if( !this.authenticatingTrabajador )
-        {
-          let msg = "Los datos ingresados no son correctas!";
-          var alert = this.alertCtrl.create({
-            title: 'Error al iniciar sesión',
-            subTitle: msg,
-            buttons: ['OK']
-          });
-          alert.present();
-        }
       }
     );
   }
@@ -115,6 +114,17 @@ export class LoginPage {
 
   registrar(){
     this.navCtrl.push( RegisterPage );
+  }
+
+  showError(){
+    let msg = "Los datos ingresados no son correctas!";
+    var alert = this.alertCtrl.create({
+      title: 'Error al iniciar sesión',
+      subTitle: msg,
+      buttons: ['OK']
+    });
+    alert.present();
+    this.dismissLoader();
   }
 
 }

@@ -4,6 +4,8 @@ import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angul
 import {Solicitud} from '../../models/solicitud';
 import {Trabajador} from '../../models/user';
 
+import {ClientePage} from '../cliente/cliente'
+
 import { SolicitudesService } from '../../providers/solicitudes-service';
 
 @IonicPage()
@@ -32,6 +34,16 @@ export class ResultsPage {
       (trabajadores) => {
         this.trabajadores = trabajadores;
         this.trabajadores.reverse();
+        if( this.trabajadores.length == 0 )
+        {
+          var alert = this.alertCtrl.create({
+            title: 'Error',
+            subTitle: 'No hay trabajadores registrados con este interes',
+            buttons: ['OK']
+          });
+          alert.present();
+          this.navCtrl.pop();
+        }
         console.log( this.trabajadores );
       },
       (error) => {
@@ -40,15 +52,12 @@ export class ResultsPage {
     )
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad Results');
-  }
-
   solicitar( trabajador : Trabajador ){
     this.solicitud.trabajador = trabajador;
     this.solicitudesService.createSolicitud(this.solicitud).subscribe(
       solicitud => {
         console.log( solicitud )
+        this.navCtrl.setRoot( ClientePage );
       },
       (error: Response) => {
         console.log(error);
