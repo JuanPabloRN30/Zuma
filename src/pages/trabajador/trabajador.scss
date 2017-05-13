@@ -10,7 +10,7 @@ page-trabajador {
       display: flex;
       flex-direction: column;
 
-      width: calc(100% - 10px);
+      //width: calc(100%);
 
       @for $i from 2 through 5 {
         @media all and (min-width: #{300px * ($i - 1)}) {

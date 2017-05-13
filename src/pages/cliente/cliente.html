@@ -30,7 +30,6 @@
 
 
 <ion-content>
-
   <ion-label text-center> Lista de Solicitudes </ion-label>
   <section class='product-cards'>
     <ion-card class='card-product' *ngFor="let solicitud of solicitudes">
@@ -42,9 +41,19 @@
           </ion-card-header>
           <ion-card-content>
             <p>{{ solicitud.interes.nombre }}</p>
+            <p>{{ solicitud.direccion }}</p>
             <p>Estado: {{ solicitud.estado }} </p>
           </ion-card-content>
       </ion-item>
+
+      <ion-row no-padding *ngIf="solicitud.estado=='Aceptada'" >
+        <ion-col text-center>
+          <button ion-button icon-only clear light (click)="finalizarSolicitud( solicitud )">
+              <ion-icon name="checkmark"></ion-icon>
+              Finalizar
+          </button>
+        </ion-col>
+      </ion-row>
     </ion-card>
   </section>
 

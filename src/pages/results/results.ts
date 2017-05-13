@@ -34,6 +34,7 @@ export class ResultsPage {
       (trabajadores) => {
         this.trabajadores = trabajadores;
         this.trabajadores.reverse();
+        console.log(this.trabajadores);
         if( this.trabajadores.length == 0 )
         {
           var alert = this.alertCtrl.create({
@@ -69,6 +70,28 @@ export class ResultsPage {
         });
         alert.present();
       })
+  }
+
+  ingresarDireccion(trabajador: Trabajador){
+    var alert = this.alertCtrl.create({
+      title: 'Ingresar direccion',
+      inputs:[
+        {
+          name:'direccion',
+          placeholder: 'direccion'
+        }
+      ],
+      buttons: [
+        {
+          text:'OK',
+          handler: data =>{
+            this.solicitud.direccion = data.direccion;
+            this.solicitar( trabajador );
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

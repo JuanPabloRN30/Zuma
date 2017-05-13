@@ -38,7 +38,6 @@ export class TrabajadorPage {
       this.pages = [
         { title: 'Lista de Solicitudes', component: TrabajadorPage, icon: 'folder-open' },
         { title: 'Historial de Solicitudes', component: HistorialPage, icon: 'folder-open' },
-        { title: 'Configuración', component: LoginPage, icon: 'settings' },
         { title: 'Cerrar Sesión', component: null, icon: 'power' },
       ];
       menuCtrl.enable(true);
@@ -57,7 +56,6 @@ export class TrabajadorPage {
   loadData(){
     this.solicitudesService.obtenerSolicitudesTrabajador("Pendiente,Aceptada").subscribe(
       (solicitudes) => {
-        console.log("Entre a pendiente");
         this.solicitudes = solicitudes;
         this.solicitudes.reverse();
         for( var i = 0 ; i < this.solicitudes.length; i++ )
@@ -120,25 +118,6 @@ export class TrabajadorPage {
         alert.present();
       })
   }
-
-  finalizarSolicitud(solicitud: Solicitud){
-    solicitud.estado = "Finalizada";
-    this.solicitudesService.editSolicitud( solicitud ).subscribe(
-      solicitud => {
-        this.loadData();
-      },
-      (error: Response) => {
-        console.log(error);
-        var msg = 'No se pudo editar la solicitud'
-        var alert = this.alertCtrl.create({
-          title: 'Error',
-          subTitle: msg,
-          buttons: ['OK']
-        });
-        alert.present();
-      })
-  }
-
 
   openPage(page) {
     if(page.title == 'Cerrar Sesión') {

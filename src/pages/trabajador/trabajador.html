@@ -37,33 +37,29 @@
             {{ solicitud.cliente.first_name }}
           </ion-card-header>
           <ion-card-content>
+            <p>{{ solicitud.direccion }}</p>
             <p>{{ solicitud.interes.nombre }}</p>
             <p>Estado: {{ solicitud.estado }}</p>
           </ion-card-content>
       </ion-item>
 
       <ion-row no-padding *ngIf="solicitud.estado=='Pendiente'" >
-        <ion-col>
-          <button ion-button icon-only clear light (click)="aceptarSolicitud( solicitud )">
-              <ion-icon name="checkmark"></ion-icon>
-              Aceptar
-          </button>
-        </ion-col>
-        <ion-col text-right>
-           <button ion-button icon-only color="danger" clear danger (click)="rechazarSolicitud( solicitud )">
-              <ion-icon name="close"></ion-icon>
-              Rechazar
-          </button>
-        </ion-col>
-      </ion-row>
-
-      <ion-row no-padding *ngIf="solicitud.estado=='Aceptada'" >
-        <ion-col text-center>
-          <button ion-button icon-only clear light (click)="finalizarSolicitud( solicitud )">
-              <ion-icon name="checkmark"></ion-icon>
-              Finalizar
-          </button>
-        </ion-col>
+        <ion-row>
+          <ion-col text-center>
+            <button ion-button icon-only clear light (click)="aceptarSolicitud( solicitud )">
+                <ion-icon name="checkmark"></ion-icon>
+                Aceptar
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+             <button ion-button icon-only color="danger" clear danger (click)="rechazarSolicitud( solicitud )">
+                <ion-icon name="close"></ion-icon>
+                Rechazar
+            </button>
+          </ion-col>
+        </ion-row>
       </ion-row>
     </ion-card>
   </section>

@@ -11,13 +11,13 @@
   <form>
     <ion-row>
 
-      <ion-item>
-        <ion-input type="email" [(ngModel)]="username" placeholder="Correo Electronico" name="email"></ion-input>
-      </ion-item>
+      <div>
+        <ion-input class='input-form' type="email" [(ngModel)]="username" placeholder="Correo Electronico" name="email"></ion-input>
+      </div>
 
-      <ion-item>
-        <ion-input type="password" [(ngModel)]="password" placeholder="Contraseña" name="password"></ion-input>
-      </ion-item>
+      <div>
+        <ion-input class='input-form' type="password" [(ngModel)]="password" placeholder="Contraseña" name="password"></ion-input>
+      </div>
 
       <div>
         <button class='login-button' (click)='iniciarSesion()' >Iniciar Sesión</button>

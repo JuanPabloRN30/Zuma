@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 
 import { Cliente } from '../../models/user'
 import { Solicitud } from '../../models/solicitud'
@@ -28,6 +29,7 @@ export class ClientePage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
+              public alertCtrl: AlertController,
               public menuCtrl: MenuController,
               public loadingCtrl: LoadingController,
               public userDataService: UserDataService,
@@ -35,7 +37,6 @@ export class ClientePage {
     this.pages = [
       { title: 'Lista de Solicitudes', component: ClientePage, icon: 'folder-open' },
       { title: 'Historial de Solicitudes', component: HistorialPage, icon: 'folder-open' },
-      { title: 'Configuración', component: LoginPage, icon: 'settings' },
       { title: 'Cerrar Sesión', component: null, icon: 'power' },
     ];
     menuCtrl.enable(true);
@@ -44,6 +45,10 @@ export class ClientePage {
   ngOnInit()
   {
     this.cliente = this.userDataService.getCliente();
+    this.loadData();
+  }
+
+  loadData(){
     this.solicitudesService.obtenerSolicitudesCliente("Pendiente,Aceptada").subscribe(
       (solicitudes) => {
         this.solicitudes = solicitudes;
@@ -93,6 +98,23 @@ export class ClientePage {
       });
     else
       this.navCtrl.push(page.component);
+  }
+
+  finalizarSolicitud(solicitud: Solicitud){
+    solicitud.estado = "Finalizada";
+    this.solicitudesService.editSolicitud( solicitud ).subscribe(
+      solicitud => {
+        this.loadData();
+      },
+      (error: Response) => {
+        var msg = 'No se pudo editar la solicitud'
+        var alert = this.alertCtrl.create({
+          title: 'Error',
+          subTitle: msg,
+          buttons: ['OK']
+        });
+        alert.present();
+      })
   }
 
 }

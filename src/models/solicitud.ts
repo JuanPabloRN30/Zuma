@@ -31,7 +31,7 @@ export class Solicitud
   export():any{
     var obj: any = {};
 //    obj.fecha = this.fecha;
-//    obj.direccion = this.direccion;
+    obj.direccion = this.direccion;
 //    obj.descripcion = this.descripcion;
     obj.id = this.id;
     obj.estado = this.estado;
