@@ -1,7 +1,11 @@
 page-results {
 
+  .background, .background .pane, .background .item, .background .item-complex .item-content{
+    background-color: #00A9F3;
+    }
+
     .product-cards {
-      width: 100%;
+      // width: 100%;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -11,20 +15,25 @@ page-results {
         display: flex;
         flex-direction: column;
 
-        width: calc(100% - 10px);
+        width: calc(100% + 10px);
 
         @for $i from 2 through 5 {
           @media all and (min-width: #{300px * ($i - 1)}) {
-            width: calc(#{(100% / $i)} - 10px);
+            width: calc(#{(100% / $i)} + 10px);
           }
         }
 
         ion-card-header > p{
+          white-space: normal;
           font-weight: bold;
         }
 
         ion-item {
           margin-top: auto;
+        }
+
+        button{
+          color: white;
         }
 
         img {

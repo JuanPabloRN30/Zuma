@@ -1,12 +1,12 @@
 {
   "name": "Renacimiento",
   "app_id": "188d4cce",
-  "v2": true,
-  "typescript": true,
   "proxies": [
     {
       "path": "/api",
       "proxyUrl": "http://0.0.0.0:8000/api"
     }
-  ]
+  ],
+  "integrations": {},
+  "type": "ionic-angular"
 }

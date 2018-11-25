@@ -7,16 +7,22 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="background">
   <section class='product-cards'>
     <ion-card class='card-product' *ngFor="let solicitud of solicitudes">
       <ion-item>
-        <img src="assets/img/{{solicitud.interes.categoria.nombre}}.png"/>
-          <ion-card-header>
+        <img src="assets/img/categoria/{{solicitud.interes.categoria.nombre}}.png"/>
+          <ion-card-header *ngIf="tipo=='Trabajador'">
             {{ solicitud.cliente.first_name }}
+          </ion-card-header>
+          <ion-card-header *ngIf="tipo!='Trabajador'">
+            {{ solicitud.trabajador.first_name }}
           </ion-card-header>
           <ion-card-content>
             <p>{{ solicitud.interes.nombre }}</p>
+            <p>{{ solicitud.direccion }}</p>
+            <p>{{ solicitud.fecha | date: "longDate" }}</p>
+            <p>{{ solicitud.fecha | date: "shortTime" }}</p>
             <p>Estado: {{ solicitud.estado }}</p>
           </ion-card-content>
       </ion-item>

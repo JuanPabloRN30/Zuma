@@ -1,13 +1,13 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Busqueda: {{interes}}</ion-title>
+    <ion-title text-center>Busqueda: {{interes}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content>
+<ion-content class="background">
   <section class='product-cards'>
     <ion-card class='card-product' *ngFor="let trabajador of trabajadores">
       <img src="assets/img/trabajadores/{{trabajador.username}}.png"/>

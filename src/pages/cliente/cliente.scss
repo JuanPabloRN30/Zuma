@@ -1,6 +1,15 @@
 page-cliente {
 
+  .background, .background .pane, .background .item, .background .item-complex .item-content{
+    background-color: #00A9F3;
+  }
+  // Borrar
+  h1{
+    color: white;
+  }
+
   .product-cards {
+
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -11,18 +20,19 @@ page-cliente {
       display: flex;
       flex-direction: column;
 
-      width: calc(100% - 10px);
 
-
-
+      // width: calc(100% - 10px);
+      width: 40%;
       @for $i from 2 through 5 {
-        @media all and (min-width: #{300px * ($i - 1)}) {
-          width: calc(#{(100% / $i)} - 10px);
+        @media all and (min-width: #{300px * ($i)}) {
+          width: calc(#{(100% / $i)} + 10px);
         }
       }
 
-      ion-card-header > p{
+      ion-card-header > h2{
         font-weight: bold;
+        color: #488aff;
+        white-space: normal;
       }
 
       ion-item {
@@ -34,6 +44,5 @@ page-cliente {
       }
     }
   }
-
 
 }

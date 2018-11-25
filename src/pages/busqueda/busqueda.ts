@@ -7,6 +7,8 @@ import {Categoria} from '../../models/categoria';
 
 import {ResultsPage} from '../results/results';
 
+import { areas_interes } from '../../providers/services-util';
+
 @IonicPage()
 @Component({
   selector: 'page-busqueda',
@@ -18,12 +20,6 @@ export class BusquedaPage {
   direccion: string;
   categoria: Categoria;
   interes: Interes;
-
-  areas_interes: any ={
-    'Hogar': [ 'Electricidad','Plomeria','Cerrajeria' ],
-    'Alimentacion': [ 'Comida Rapida','Postres','Comida Tipica','Reposteria','Panaderia' ],
-    'Belleza': [ 'Maquillaje','Manicure','Pedicure','Tintes','Corte','Depilacion','Masajes' ],
-  };
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,

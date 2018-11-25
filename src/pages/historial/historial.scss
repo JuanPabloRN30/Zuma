@@ -1,6 +1,10 @@
 page-historial {
+  .background, .background .pane, .background .item, .background .item-complex .item-content{
+    background-color: #00A9F3;
+  }
+
   .product-cards {
-    width: 100%;
+    // width: 100px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -11,8 +15,6 @@ page-historial {
       flex-direction: column;
 
       width: calc(100% - 10px);
-
-
 
       @for $i from 2 through 5 {
         @media all and (min-width: #{300px * ($i - 1)}) {

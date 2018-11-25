@@ -22,6 +22,7 @@ export class HistorialPage {
   trabajador: Trabajador;
   cliente: Cliente;
   solicitudes: Solicitud[];
+  tipo: string;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -34,6 +35,7 @@ export class HistorialPage {
 
   ngOnInit()
   {
+    this.tipo = this.navParams.get( 'usuario' )
     if( this.navParams.get( 'usuario' ) == 'Trabajador' )
     {
       this.trabajador = this.userDataService.getTrabajador();
@@ -65,7 +67,8 @@ export class HistorialPage {
   }
 
   loadDataCliente(){
-    this.solicitudesService.obtenerSolicitudesCliente("Rechazada,Finalizada").subscribe(
+    //PARAMETROS: Rechazada,Finalizada
+    this.solicitudesService.obtenerSolicitudesCliente("").subscribe(
       (solicitudes) => {
         this.solicitudes = solicitudes;
         this.solicitudes.reverse();

@@ -14,6 +14,8 @@ import {ClientePage} from '../cliente/cliente'
 import { UserDataService } from '../../providers/user-data-service'
 import { AuthService } from '../../providers/auth-service';
 
+import { areas_interes } from '../../providers/services-util';
+
 @IonicPage()
 @Component({
   selector: 'page-register',
@@ -30,13 +32,7 @@ export class RegisterPage {
   intereses_a: string[];
   intereses_b: string[];
   interes: Interes[] = [];
-
-  areas_interes: any ={
-    'Hogar': [ 'Electricidad','Plomeria','Cerrajeria' ],
-    'Alimentacion': [ 'Comida Rapida','Postres','Comida Tipica','Reposteria','Panaderia' ],
-    'Belleza': [ 'Maquillaje','Manicure','Pedicure','Tintes','Corte','Depilacion','Masajes' ],
-  };
-
+  areas_interes: any = areas_interes;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,

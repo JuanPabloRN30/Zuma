@@ -6,7 +6,6 @@ import { Solicitud } from '../../models/solicitud'
 import { Trabajador } from '../../models/user'
 import { Categoria } from '../../models/categoria'
 
-import {LoginPage} from '../login/login';
 import {HomePage} from '../home/home';
 import {HistorialPage} from '../historial/historial';
 

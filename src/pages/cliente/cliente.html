@@ -28,36 +28,45 @@
 
 <ion-nav [root]="rootPage" #content></ion-nav>
 
+<ion-content class="background">
+  <div *ngIf="categoria.nombre==''">
+    <h1 text-center>Categorias</h1>
+    <section class='product-cards'>
+      <ion-card class='card-product' *ngFor="let categoria of categorias" (click)="irInteres( categoria )">
+        <ion-card-header text-center>
+          <h2>{{categoria}}</h2>
+        </ion-card-header>
+        <img src="assets/img/categoria/{{categoria}}.png"/>
+      </ion-card>
+    </section>
+  </div>
 
-<ion-content>
-  <ion-label text-center> Lista de Solicitudes </ion-label>
-  <section class='product-cards'>
-    <ion-card class='card-product' *ngFor="let solicitud of solicitudes">
-      <img src="assets/img/{{solicitud.interes.categoria.nombre}}.png"/>
-      <ion-item>
-          <ion-card-header>
-            <p>Trabajador:</p>
-            <p>{{ solicitud.trabajador.first_name }}</p>
-          </ion-card-header>
-          <ion-card-content>
-            <p>{{ solicitud.interes.nombre }}</p>
-            <p>{{ solicitud.direccion }}</p>
-            <p>Estado: {{ solicitud.estado }} </p>
-          </ion-card-content>
-      </ion-item>
+  <div [ngSwitch]="categoria.nombre">
+    <h1 text-center>{{categoria.nombre}}</h1>
+    <section  *ngSwitchCase="'Hogar'" class='product-cards'>
+      <ion-card class='card-product' *ngFor="let x of areas_interes['Hogar']" (click)="irTrabajadores( x )">
+        <ion-card-header text-center>
+          <h2>{{x}}</h2>
+        </ion-card-header>
+        <img src="assets/img/interes/{{x}}.png"/>
+      </ion-card>
+    </section>
+    <section  *ngSwitchCase="'Alimentacion'" class='product-cards'>
+      <ion-card class='card-product' *ngFor="let x of areas_interes['Alimentacion']" (click)="irTrabajadores( x )">
+        <ion-card-header text-center>
+          <h2>{{x}}</h2>
+        </ion-card-header>
+        <img src="assets/img/interes/{{x}}.png"/>
+      </ion-card>
+    </section>
+    <section  *ngSwitchCase="'Belleza'" class='product-cards'>
+      <ion-card class='card-product' *ngFor="let x of areas_interes['Belleza']" (click)="irTrabajadores( x )">
+        <ion-card-header text-center>
+          <h2>{{x}}</h2>
+        </ion-card-header>
+        <img src="assets/img/interes/{{x}}.png"/>
+      </ion-card>
+    </section>
+  </div>
 
-      <ion-row no-padding *ngIf="solicitud.estado=='Aceptada'" >
-        <ion-col text-center>
-          <button ion-button icon-only clear light (click)="finalizarSolicitud( solicitud )">
-              <ion-icon name="checkmark"></ion-icon>
-              Finalizar
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-  </section>
-
-  <ion-fab bottom right >
-    <button ion-fab (click)=buscar()><ion-icon name="add" md="md-add"></ion-icon></button>
-  </ion-fab>
 </ion-content>

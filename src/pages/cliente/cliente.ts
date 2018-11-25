@@ -1,15 +1,20 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
+import { AlertController,Platform } from 'ionic-angular';
 
 import { Cliente } from '../../models/user'
 import { Solicitud } from '../../models/solicitud'
 import { Categoria } from '../../models/categoria'
 
-import {LoginPage} from '../login/login';
+
+import { Interes } from '../../models/interes'
+
 import {HomePage} from '../home/home';
 import {BusquedaPage} from '../busqueda/busqueda';
 import {HistorialPage} from '../historial/historial';
+
+//Borrar
+import {ResultsPage} from '../results/results';
 
 import { SolicitudesService } from '../../providers/solicitudes-service';
 import { UserDataService } from '../../providers/user-data-service';
@@ -27,13 +32,22 @@ export class ClientePage {
   cliente: Cliente;
   solicitudes: Solicitud[];
 
+
+  categorias: string[] = ['Hogar','Alimentacion','Belleza'];
+  categoria: Categoria;
+  interes: Interes;
+  solicitud: Solicitud;
+  areas_interes: any = areas_interes;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public alertCtrl: AlertController,
               public menuCtrl: MenuController,
               public loadingCtrl: LoadingController,
               public userDataService: UserDataService,
-              public solicitudesService: SolicitudesService) {
+              public solicitudesService: SolicitudesService,
+              public platform: Platform
+            ) {
     this.pages = [
       { title: 'Lista de Solicitudes', component: ClientePage, icon: 'folder-open' },
       { title: 'Historial de Solicitudes', component: HistorialPage, icon: 'folder-open' },
@@ -46,23 +60,19 @@ export class ClientePage {
   {
     this.cliente = this.userDataService.getCliente();
     this.loadData();
+    this.platform.registerBackButtonAction( () => {
+      this.interes = new Interes({});
+      this.categoria = new Categoria({});
+      this.solicitud = new Solicitud({});
+      this.categoria.nombre = "";
+    });
   }
 
   loadData(){
-    this.solicitudesService.obtenerSolicitudesCliente("Pendiente,Aceptada").subscribe(
-      (solicitudes) => {
-        this.solicitudes = solicitudes;
-        this.solicitudes.reverse();
-        for( var i = 0 ; i < this.solicitudes.length; i++ )
-        {
-          var nombre_interes = this.solicitudes[ i ].interes.nombre;
-          this.solicitudes[ i ].interes.categoria = new Categoria( {nombre: this.obtenerCategoria( nombre_interes )} )
-        }
-      },
-      (error) => {
-
-      }
-    )
+    this.interes = new Interes({});
+    this.categoria = new Categoria({});
+    this.solicitud = new Solicitud({});
+    this.categoria.nombre = "";
   }
 
   obtenerCategoria( nombre: string ){
@@ -89,15 +99,14 @@ export class ClientePage {
       this.navCtrl.setRoot(HomePage);
       loader.dismiss();
     }
-    else if(page.title == 'Configuraciones') {
-        this.navCtrl.setRoot(page.component);
+    else if(page.title == 'Lista de Solicitudes') {
+        // this.navCtrl.setRoot(page.component);
+        this.loadData();
     }
     else if( page.title == 'Historial de Solicitudes' )
       this.navCtrl.push(page.component, {
         usuario: 'Cliente'
       });
-    else
-      this.navCtrl.push(page.component);
   }
 
   finalizarSolicitud(solicitud: Solicitud){
@@ -115,6 +124,56 @@ export class ClientePage {
         });
         alert.present();
       })
+  }
+
+  // BORRAR
+  irInteres( categoria: string ){
+    this.categoria.nombre = categoria;
+  }
+
+  irTrabajadores( interes: string ){
+      var alert = this.alertCtrl.create({
+        title: 'Ingresar fecha',
+        inputs:[
+          {
+            name:'fecha',
+            placeholder: 'fecha',
+            type: 'datetime-local'
+          }
+        ],
+        buttons: [
+          {
+            text:'OK',
+            handler: data =>{
+              this.interes.nombre = interes;
+              this.interes.categoria = this.categoria;
+              this.solicitud.interes = this.interes;
+              if( data.fecha == "" )
+                this.showError();
+              else
+              {
+                this.solicitud.fecha = new Date( data.fecha );
+                this.solicitud.estado = "Pendiente";
+                console.log( this.solicitud );
+                this.navCtrl.push(ResultsPage,{
+                  solicitud: this.solicitud
+                });
+              }
+            }
+          }
+        ]
+      });
+      alert.present();
+  }
+
+  showError(){
+    let msg = "La fecha no se ha ingresado!";
+    var alert = this.alertCtrl.create({
+      title: 'Error',
+      subTitle: msg,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 }
